@@ -1,17 +1,12 @@
 {
-  "name": "HelloWorld",
+  "name": "app-service-hello-world",
+  "description": "Simple Hello World Node.js sample for Azure App Service",
+  "version": "0.0.1",
   "private": true,
-  "version": "0.0.0",
-  "description": "Hello World",
-  "main": "server.js",
-  "author": {
-    "name": "",
-    "email": ""
-  },
-  "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-mocha": "^2.2.0",
-    "mocha-junit-reporter": "^1.12.0"
+  "license": "MIT",
+  "author": "Microsoft",
+  "engines": {
+    "node": ">=6.9.1"
   },
   "scripts": {
     "start": "node server.js"
