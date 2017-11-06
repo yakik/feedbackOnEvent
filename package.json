@@ -17,4 +17,7 @@
     "gulp-mocha": "^2.2.0",
     "mocha-junit-reporter": "^1.12.0"
   }
+  "scripts": {
+    "start": "node server.js"
+  }
 }
