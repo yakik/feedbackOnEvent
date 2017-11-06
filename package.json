@@ -11,5 +11,8 @@
     "url": "https://yakikoren.visualstudio.com/_git/FeedbackAgileSparks"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
