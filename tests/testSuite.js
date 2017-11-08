@@ -8,7 +8,6 @@ describe( 'Test Suite' , function(){
 
     after(function(){
 
-        return driver.quit();
 
     });
 
