@@ -41,7 +41,7 @@ test.describe("My Inner Suite 1", function(){
     test.it("Test-1", function() {
         driver.getTitle().then(function (title) {
             // google page title should be printed
-            expect(title).to.equal('Agaaaaile Sparks Event Feedback');
+            expect(title).to.equal('Agile Sparks Event Feedback');
 
         });
     });

@@ -9,12 +9,17 @@
     "node": ">=6.9.1"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "functionalTests": "mocha functionalTests.js"
   },
   "dependencies": {
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chromedriver": "^2.33.2",
+    "coffee-script": "^1.12.7",
     "gulp": "^3.9.1",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "selenium-webdriver": "^3.6.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

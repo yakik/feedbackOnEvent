@@ -1,52 +1,32 @@
-describe("Inner Suite 1", function(){
+var webdriver = require('selenium-webdriver'),
+    chrome = require('selenium-webdriver/chrome'),
+    firefox = require('selenium-webdriver/firefox');
+
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .setChromeOptions( /* … */)
+    .build();
+
+describe( 'Test Suite' , function(){
 
     before(function(){
 
-        // do something before test suite execution
-        // no matter if there are failed cases
+        driver.get( my_service );
+        driver.findElement(webdriver.By.id(username)).sendKeys(my_username);
 
+        // a promise is returned while ‘click’ action
+        // is registered in ‘driver’ object
+        return driver.findElement(webdriver.By.id(submit)).click();
     });
 
     after(function(){
 
-        // do something after test suite execution is finished
-        // no matter if there are failed cases
+        return driver.quit();
 
     });
 
-    beforeEach(function(){
+    it( 'Test Case', function(){
 
-        // do something before test case execution
-        // no matter if there are failed cases
-
-    });
-
-    afterEach(function(){
-
-        // do something after test case execution is finished
-        // no matter if there are failed cases
-
-    });
-
-    it("Test-1", function(){
-
-        // test Code
-        // assertions
-
-    });
-
-    it("Test-2", function(){
-
-        // test Code
-        // assertions
-
-    });
-
-    it("Test-3", function(){
-
-        // test Code
-        // assertions
-
-    });
-
-});
+        driver.getTitle().then(function(title){
+            expect(title).equals(my_title);
+        })
