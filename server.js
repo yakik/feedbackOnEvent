@@ -19,12 +19,13 @@ app.get('/', function (req, res) {
 //})
 
 //1337
-var server = app.listen(8080, function () {});
+var port = process.env.PORT ;
+var server = app.listen(port, function () {});
 
     var host = server.address().address;
-    var port = server.address().port;
+    var myport = server.address().port;
 
-    console.log("Example app listening at http://%s:%s", host, port);
+    console.log("Example app listening at http://%s:%s", host, myport);
 
 
 
