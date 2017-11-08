@@ -18,8 +18,8 @@ app.get('/', function (req, res) {
 //    res.send('Page Listing');
 //})
 
-
-var server = app.listen(1337, function () {});
+//1337
+var server = app.listen(8080, function () {});
 
     var host = server.address().address;
     var port = server.address().port;
