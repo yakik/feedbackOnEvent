@@ -29,3 +29,8 @@ node_modules
 /package-lock.json
 
 TEST-RESULTS.xml
+.idea/FeedbackAgileSparks.iml
+.idea/inspectionProfiles/
+.idea/workspace.xml
+chromedriver.exe
+.idea
