@@ -30,7 +30,7 @@ function checkButtonStatistics (ID, driver, test) {
                                                 var statAfterClick = +statAfterClickStr;
                                                 console.log("4");
                                                 console.log(statBeforeClick + "=BEFORE ZZZZZ AFTER = " + statAfterClick);
-                                                expect(statAfterClick).equals(statBeforeClick + 1, "stat not increased by one");
+                                                expect(statAfterClick).equals(statBeforeClick + 1, "stat not increased by one on stat " + ID);
                                             });
                                     });
                                 });
