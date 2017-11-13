@@ -13,14 +13,14 @@ console.log("-----------------------------------------------");
 function checkButtonStatistics (ID, driver, test) {
     driver.get("http://localhost:1337/stat?event=" + test)
         .then(function () {
-            driver.findElement(selenium.By.id("stat " + ID))
+            driver.findElement(selenium.By.id("stat" + ID))
                 .getText(function (statBeforeClick) {
                     expect(statBeforeClick).to.be.an('integer').greaterThan(-1);
                     driver.get("http://localhost:1337/feedback?event=" + test)
-                        .findElement(selenium.By.id("button " + ID))
+                        .findElement(selenium.By.id("button" + ID))
                         .click().then(function () {
                         driver.get("http://localhost:1337/stat?event=" + test)
-                            .findElement(selenium.By.id("stat " + ID))
+                            .findElement(selenium.By.id("stat" + ID))
                             .getText(function (statAfterClick) {
                                 expect(statAfterClick).to.be.equalTo(statBeforeClick + 1, "stat not increased by one");
                             })
