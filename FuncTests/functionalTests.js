@@ -13,19 +13,30 @@ console.log("-----------------------------------------------");
 function checkButtonStatistics (ID, driver, test) {
     driver.get("http://localhost:1337/stat?event=" + test)
         .then(function () {
+            console.log("1");
             driver.findElement(selenium.By.id("stat" + ID))
-                .getText(function (statBeforeClick) {
-                    expect(statBeforeClick).to.be.an('integer').greaterThan(-1);
-                    driver.get("http://localhost:1337/feedback?event=" + test)
-                        .findElement(selenium.By.id("button" + ID))
-                        .click().then(function () {
-                        driver.get("http://localhost:1337/stat?event=" + test)
-                            .findElement(selenium.By.id("stat" + ID))
-                            .getText(function (statAfterClick) {
-                                expect(statAfterClick).to.be.equalTo(statBeforeClick + 1, "stat not increased by one");
-                            })
-                    })
-                })
+                .getText()
+                .then(function(statBeforeClickStr){
+                    var statBeforeClick = +statBeforeClickStr;
+                    driver.get("http://localhost:1337/feedback?event=" + test).then(function (){
+                        driver.findElement(selenium.By.id("button" + ID))
+                            .then (function(button) {
+                                button.click().then(function () {
+                                    console.log("3");
+                                    driver.get("http://localhost:1337/stat?event=" + test).then(function () {
+                                        driver.findElement(selenium.By.id("stat" + ID))
+                                            .getText()
+                                            .then(function (statAfterClickStr) {
+                                                var statAfterClick = +statAfterClickStr;
+                                                console.log("4");
+                                                console.log(statBeforeClick + "=BEFORE ZZZZZ AFTER = " + statAfterClick);
+                                                expect(statAfterClick).equals(statBeforeClick + 1, "stat not increased by one");
+                                            });
+                                    });
+                                });
+                            });
+                    });
+                },function(){console.log("couldn't find!");});
         })
 }
 
@@ -47,7 +58,7 @@ test.describe("My Inner Suite 1", function(){
 
     test.after(function(){
 
-     //   driver.quit();
+        driver.quit();
 
     });
 
@@ -72,8 +83,10 @@ test.describe("My Inner Suite 1", function(){
     });
 
     test.it("check buttons/statistics", function(){
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < 4; i++) {
             checkButtonStatistics (i, driver, currentTest);
+            console.log("HHHH");
+        }
 
     });
 

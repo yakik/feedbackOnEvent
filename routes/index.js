@@ -7,7 +7,7 @@ router.get('/feedback', function(req, res, next) {
 });
 
 router.get('/stat', function(req, res, next) {
-    res.render('index', { title: 'Feedback!' });
+    res.render('stat', { title: 'Feedback!' });
 });
 
 module.exports = router;
