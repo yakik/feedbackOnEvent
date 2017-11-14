@@ -13,7 +13,6 @@ console.log("-----------------------------------------------");
 function checkButtonStatistics (ID, driver, test) {
     driver.get("http://localhost:1337/stat?event=" + test)
         .then(function () {
-            console.log("1");
             driver.findElement(selenium.By.id("stat" + ID))
                 .getText()
                 .then(function(statBeforeClickStr){
