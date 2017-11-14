@@ -1,96 +1,83 @@
-var selenium = require ('selenium-webdriver');
-var chrome = require('selenium-webdriver/chrome');
-var chai = require('chai');
-chai.use(require('chai-as-promised'));
-var expect = chai.expect;
-var test = require('selenium-webdriver/testing');
+var selenium = require('selenium-webdriver')
+var chai = require('chai')
+chai.use(require('chai-as-promised'))
+var expect = chai.expect
+var test = require('selenium-webdriver/testing')
 
+var siteAddress = 'http://localhost:1337/'
+var statisticsAddress = 'stat?event='
+var feedbackAddress = 'feedback?event='
+var numberOfButtons = 4
+var statAttNamePrefix = 'stat'
+var buttonAttNamePrefix = 'button'
 
-console.log("-----------------------------------------------");
-
-
+console.log('-----------------------------------------------')
 
 function checkButtonStatistics (ID, driver, test) {
-    driver.get("http://localhost:1337/stat?event=" + test)
-        .then(function () {
-            driver.findElement(selenium.By.id("stat" + ID))
-                .getText()
-                .then(function(statBeforeClickStr){
-                    var statBeforeClick = +statBeforeClickStr;
-                    driver.get("http://localhost:1337/feedback?event=" + test).then(function (){
-                        driver.findElement(selenium.By.id("button" + ID))
-                            .then (function(button) {
-                                button.click().then(function () {
-                                    console.log("3");
-                                    driver.get("http://localhost:1337/stat?event=" + test).then(function () {
-                                        driver.findElement(selenium.By.id("stat" + ID))
-                                            .getText()
-                                            .then(function (statAfterClickStr) {
-                                                var statAfterClick = +statAfterClickStr;
-                                                console.log("4");
-                                                console.log(statBeforeClick + "=BEFORE ZZZZZ AFTER = " + statAfterClick);
-                                                expect(statAfterClick).equals(statBeforeClick + 1, "stat not increased by one on stat " + ID);
-                                            });
-                                    });
-                                });
-                            });
-                    });
-                },function(){console.log("couldn't find!");});
-        })
+  driver.get(siteAddress + statisticsAddress + test)
+    .then(function () {
+      driver.findElement(selenium.By.id(statAttNamePrefix + ID))
+        .getText()
+        .then(statBeforeClickStr => {
+          var statBeforeClick = +statBeforeClickStr
+          driver.get(siteAddress + feedbackAddress + test).then(() => {
+            driver.findElement(selenium.By.id(buttonAttNamePrefix + ID))
+              .then(button => {
+                button.click().then(() => {
+                  driver.get(siteAddress + statisticsAddress + test).then(() => {
+                    driver.findElement(selenium.By.id(statAttNamePrefix + ID))
+                      .getText()
+                      .then(statAfterClickStr => {
+                        var statAfterClick = +statAfterClickStr
+                        expect(statAfterClick).equals(statBeforeClick + 1, 'stat not increased by one on stat ' + ID)
+                      })
+                  })
+                })
+              })
+          })
+        }, function () { console.log("couldn't find!") })
+    })
 }
 
+test.describe('My Inner Suite 1', function () {
+  var driver
+  var currentTest = 'TEST@' + (new Date()).getMilliseconds()
 
-test.describe("My Inner Suite 1", function(){
+  test.before(function () {
+    driver = new selenium.Builder()
+      .forBrowser('chrome')
+      .build()
+    this.timeout(10000)
+  })
 
-    var driver;
-    var currentTest= "TEST@" + (new Date()).getMilliseconds();
+  test.after(function () {
+    driver.quit()
+  })
 
-    test.before(function(){
+  test.beforeEach(function () {
+ 
+  })
 
-        driver = new selenium.Builder()
-            .forBrowser('chrome')
-            .build();
-        this.timeout(10000);
+  test.afterEach(function () {
 
+    // do something after test case execution is finished
+    // no matter if there are failed cases
 
-    });
+  })
 
-    test.after(function(){
+  test.it('Test Page Title', function () {
+    driver.get(siteAddress + feedbackAddress + currentTest)
+      .then(function () {
+        driver.getTitle().then(function (title) {
+          expect(title).equals('Feedback!', 'Title not as expected')
+        })
+      })
+  })
 
-        driver.quit();
-
-    });
-
-    test.beforeEach(function(){
-  //      driver.get("http://localhost:1337/feedback?event="+currentTest);
-
-    });
-
-    test.afterEach(function(){
-
-        // do something after test case execution is finished
-        // no matter if there are failed cases
-
-    });
-
-    test.it("Test Page Title", function() {
-        driver.get("http://localhost:1337/feedback?event="+currentTest)
-            .then(function(){
-            driver.getTitle().then(function (title) {
-                expect(title).equals("Feedback!", "Title not as expected");
-            })})
-    });
-
-    test.it("check buttons/statistics", function(){
-        for (var i = 0; i < 4; i++) {
-            checkButtonStatistics (i, driver, currentTest);
-            console.log("HHHH");
-        }
-
-    });
-
-
-
-
-
-});
+  test.it('check buttons/statistics', function () {
+    for (var i = 0; i < numberOfButtons; i++) {
+      checkButtonStatistics(i, driver, currentTest)
+      console.log('HHHH')
+    }
+  })
+})
