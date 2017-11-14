@@ -11,8 +11,8 @@ class ReferenceSetup {
     return 'feedback?event='
   }
 
-  get numberOfFeedbackButtons () {
-    return 4
+  get numberOfFeedbackRungs () {
+    return 5
   }
 
   get statElementIDPrefix () {

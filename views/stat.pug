@@ -3,7 +3,6 @@ extends layout
 block content
   h1= title
   p Thanks, we appreciate your feedback!
-  textarea(id='stat0') 0
-  textarea(id='stat1') 1
-  textarea(id='stat2') 2
-  textarea(id='stat3') 3
+  - for (var i = 0; i <  numberOfFeedbackRungs ; i++)
+    textarea(id=statElementIDPrefix + i) 0
+

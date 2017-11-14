@@ -3,7 +3,6 @@ extends layout
 block content
   h1= title
   p Thanks, we appreciate your feedback!
-  button(id='button0') 0
-  button(id='button1') 1
-  button(id='button2') 2
-  button(id='button3') 3
+  - for (var i = 0; i <  numberOfFeedbackRungs ; i++)
+    button(id=buttonElementIDPrefix + i) 0
+
