@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./www.js",
-    "funcTest": "mocha ./funcTests/functionalTests.js"
+    "funcTests": "mocha ./funcTests/functionalTests.js",
+    "unitTests": "mocha ./unitTests/unitTests.js"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -15,7 +16,6 @@
     "express": "~4.15.5",
     "mocha": "^4.0.1",
     "mongodb": "^2.2.33",
-    "mongoose": "^4.13.2",
     "morgan": "~1.9.0",
     "pug": "^2.0.0-rc.4",
     "selenium-webdriver": "^3.6.0",

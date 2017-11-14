@@ -3,9 +3,8 @@ var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var test = require('selenium-webdriver/testing')
-var ReferenceSetup = require('../referenceSetup')
 
-var referenceSetup = new ReferenceSetup()
+var referenceSetup = new (require('../referenceSetup'))()
 var siteAddress = referenceSetup.siteAddress
 var statisticsAddressPrefix = referenceSetup.statisticsAddressPrefix
 var feedbackAddressPrefix = referenceSetup.feedbackAddressPrefix
@@ -34,17 +33,14 @@ function checkButtonStatistics (ID, driver, test) {
                       .then(statAfterClickStr => {
                         var statAfterClick = +statAfterClickStr
                         expect(statAfterClick).equals(statBeforeClick + 1, 'stat not increased by one on stat ' + ID)
-                      }, promiseError)
-                  }, promiseError)
-                }, promiseError)
-              }, promiseError)
-          }, promiseError)
-        }, promiseError)
-    }, promiseError)
+                      })
+                  })
+                })
+              })
+          })
+        })
+    })
 
-  function promiseError (err) {
-    throw err
-  }
 }
 
 test.describe('My Inner Suite 1', function () {
