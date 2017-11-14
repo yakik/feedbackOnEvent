@@ -3,45 +3,52 @@ var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var test = require('selenium-webdriver/testing')
+var ReferenceSetup = require('../referenceSetup')
 
-var siteAddress = 'http://localhost:1337/'
-var statisticsAddress = 'stat?event='
-var feedbackAddress = 'feedback?event='
-var numberOfButtons = 4
-var statAttNamePrefix = 'stat'
-var buttonAttNamePrefix = 'button'
+var referenceSetup = new ReferenceSetup()
+var siteAddress = referenceSetup.siteAddress
+var statisticsAddressPrefix = referenceSetup.statisticsAddressPrefix
+var feedbackAddressPrefix = referenceSetup.feedbackAddressPrefix
+var numberOfFeedbackButtons = referenceSetup.numberOfFeedbackButtons
+var statElementIDPrefix = referenceSetup.statElementIDPrefix
+var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
 
-console.log('-----------------------------------------------')
+var currentTest = 'TEST@' + (new Date()).getMilliseconds()
+
+console.log('--------' + siteAddress)
 
 function checkButtonStatistics (ID, driver, test) {
-  driver.get(siteAddress + statisticsAddress + test)
+  driver.get(siteAddress + statisticsAddressPrefix + test)
     .then(function () {
-      driver.findElement(selenium.By.id(statAttNamePrefix + ID))
+      driver.findElement(selenium.By.id(statElementIDPrefix + ID))
         .getText()
         .then(statBeforeClickStr => {
           var statBeforeClick = +statBeforeClickStr
-          driver.get(siteAddress + feedbackAddress + test).then(() => {
-            driver.findElement(selenium.By.id(buttonAttNamePrefix + ID))
+          driver.get(siteAddress + feedbackAddressPrefix + test).then(() => {
+            driver.findElement(selenium.By.id(buttonElementIDPrefix + ID))
               .then(button => {
                 button.click().then(() => {
-                  driver.get(siteAddress + statisticsAddress + test).then(() => {
-                    driver.findElement(selenium.By.id(statAttNamePrefix + ID))
+                  driver.get(siteAddress + statisticsAddressPrefix + test).then(() => {
+                    driver.findElement(selenium.By.id(statElementIDPrefix + ID))
                       .getText()
                       .then(statAfterClickStr => {
                         var statAfterClick = +statAfterClickStr
                         expect(statAfterClick).equals(statBeforeClick + 1, 'stat not increased by one on stat ' + ID)
-                      })
-                  })
-                })
-              })
-          })
-        }, function () { console.log("couldn't find!") })
-    })
+                      }, promiseError)
+                  }, promiseError)
+                }, promiseError)
+              }, promiseError)
+          }, promiseError)
+        }, promiseError)
+    }, promiseError)
+
+  function promiseError (err) {
+    throw err
+  }
 }
 
 test.describe('My Inner Suite 1', function () {
   var driver
-  var currentTest = 'TEST@' + (new Date()).getMilliseconds()
 
   test.before(function () {
     driver = new selenium.Builder()
@@ -55,7 +62,6 @@ test.describe('My Inner Suite 1', function () {
   })
 
   test.beforeEach(function () {
- 
   })
 
   test.afterEach(function () {
@@ -66,7 +72,7 @@ test.describe('My Inner Suite 1', function () {
   })
 
   test.it('Test Page Title', function () {
-    driver.get(siteAddress + feedbackAddress + currentTest)
+    driver.get(siteAddress + feedbackAddressPrefix + currentTest)
       .then(function () {
         driver.getTitle().then(function (title) {
           expect(title).equals('Feedback!', 'Title not as expected')
@@ -75,9 +81,8 @@ test.describe('My Inner Suite 1', function () {
   })
 
   test.it('check buttons/statistics', function () {
-    for (var i = 0; i < numberOfButtons; i++) {
-      checkButtonStatistics(i, driver, currentTest)
-      console.log('HHHH')
+    for (var i = 0; i < numberOfFeedbackButtons; i++) {
+      checkButtonStatistics(i.toString(), driver, currentTest)
     }
   })
 })
