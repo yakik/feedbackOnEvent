@@ -12,7 +12,7 @@ var numberOfFeedbackRungs = referenceSetup.numberOfFeedbackRungs
 var statElementIDPrefix = referenceSetup.statElementIDPrefix
 var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
 
-var currentTest = 'TEST@' + (new Date()).getMilliseconds()
+var currentTest = 'TESTFT@' + (new Date()).getMilliseconds()
 
 console.log('--------' + siteAddress)
 
@@ -40,7 +40,6 @@ function checkButtonStatistics (ID, driver, test) {
           })
         })
     })
-
 }
 
 test.describe('My Inner Suite 1', function () {

@@ -1,3 +1,4 @@
+var mocha = require('mocha')
 var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
@@ -7,6 +8,8 @@ var referenceSetup = new (require('../referenceSetup'))()
 var mongoConnectionString = referenceSetup.mongoConnectionString
 var MongoClient = require('mongodb').MongoClient
 
+function handlePromiseRejection(){}
+
 MongoClient.connect(mongoConnectionString, function (err, db) {
   db.close()
 })
@@ -15,33 +18,36 @@ MongoClient.connect(mongoConnectionString, function (err, db) {
 
 var FeedbackManager = require('../appModules/FeedbackManager.js')
 
-var feedbackManager = new FeedbackManager()
+var currentTest = 'TESTUT@' + (new Date()).getMilliseconds()
 
+mocha.describe('FeedbackManager Tests', function () {
+  var feedbackManager = new FeedbackManager()
 
-var currentTest = 'TEST@' + (new Date()).getMilliseconds()
-
-describe('My Inner Suite 1', function () {
-  var driver
-
-  before(function () {
-  })
-
-  after(function () {
+  mocha.before(function () {
 
   })
 
-  beforeEach(function () {
-  })
-
-  afterEach(function () {
+  mocha.after(function () {
 
   })
 
-  it('Test 1', function () {
+  mocha.beforeEach(function () {
+    feedbackManager.removeFeedback(currentTest).then(() => {
+      feedbackManager.getFeedback(currentTest).then((feedback) => {
+        expect(feedback).to.be.null('clearTests did not clear tests')
+      },handlePromiseRejection)
+    },handlePromiseRejection)
+  })
+
+  mocha.afterEach(function () {
 
   })
 
-  it('Test 2', function () {
+  mocha.it('Test 1', function () {
+
+  })
+
+  mocha.it('Test 2', function () {
 
   })
 })

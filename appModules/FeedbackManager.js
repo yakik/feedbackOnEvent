@@ -1,6 +1,20 @@
+var Feedback = require('./Feedback.js')
 
 class FeedbackManager {
-  constructor () {
+  removeFeedback () {
+    return new Promise(function (fulfill, reject) {
+      fulfill(res)
+    })
+  }
+
+  getFeedback () {
+    return new Promise(function (fulfill, reject) {
+      fulfill(res)
+    })
+  }
+
+  getFeedback () {
+
   }
 }
 
