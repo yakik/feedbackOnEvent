@@ -11,6 +11,13 @@ MongoClient.connect(mongoConnectionString, function (err, db) {
   db.close()
 })
 
+/** ****************************************************** */
+
+var FeedbackManager = require('../appModules/FeedbackManager.js')
+
+var feedbackManager = new FeedbackManager()
+
+
 var currentTest = 'TEST@' + (new Date()).getMilliseconds()
 
 describe('My Inner Suite 1', function () {
