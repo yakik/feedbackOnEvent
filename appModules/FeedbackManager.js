@@ -1,20 +1,26 @@
 var Feedback = require('./Feedback.js')
 
 class FeedbackManager {
+  constructor (mongoClient) {
+    this.mongoClient = mongoClient
+  }
+
   removeFeedback () {
     return new Promise(function (fulfill, reject) {
-      fulfill(res)
+      fulfill()
     })
   }
 
-  getFeedback () {
+  getFeedback (feedbackID) {
     return new Promise(function (fulfill, reject) {
-      fulfill(res)
+      fulfill(new Feedback())
     })
   }
 
-  getFeedback () {
-
+  createFeedback (feedbackID) {
+    return new Promise(function (fulfill, reject) {
+      fulfill(new Feedback())
+    })
   }
 }
 
