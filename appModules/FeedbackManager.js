@@ -5,7 +5,7 @@ class FeedbackManager {
     this.mongoClient = mongoClient
   }
 
-  removeFeedback () {
+  removeFeedback (feedbackID) {
     return new Promise(function (fulfill, reject) {
       fulfill()
     })

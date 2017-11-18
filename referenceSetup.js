@@ -11,7 +11,7 @@ class ReferenceSetup {
     return 'feedback?event='
   }
 
-  get numberOfFeedbackRungs () {
+  get numberOfSmileyTypes () {
     return 5
   }
 

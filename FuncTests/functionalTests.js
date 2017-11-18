@@ -8,7 +8,7 @@ var referenceSetup = new (require('../referenceSetup'))()
 var siteAddress = referenceSetup.siteAddress
 var statisticsAddressPrefix = referenceSetup.statisticsAddressPrefix
 var feedbackAddressPrefix = referenceSetup.feedbackAddressPrefix
-var numberOfFeedbackRungs = referenceSetup.numberOfFeedbackRungs
+var numberOfSmileyTypes = referenceSetup.numberOfSmileyTypes
 var statElementIDPrefix = referenceSetup.statElementIDPrefix
 var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
 
@@ -76,7 +76,7 @@ test.describe('My Inner Suite 1', function () {
   })
 
   test.it('check buttons/statistics', function () {
-    for (var i = 0; i < numberOfFeedbackRungs; i++) {
+    for (var i = 0; i < numberOfSmileyTypes; i++) {
       checkButtonStatistics(i.toString(), driver, currentTest)
     }
   })
