@@ -63,7 +63,5 @@ mocha.describe('FeedbackManager Tests', function () {
     }, handlePromiseRejection)
   })*/
 
-  mocha.it('Test 2', function () {
 
-  })
 })
