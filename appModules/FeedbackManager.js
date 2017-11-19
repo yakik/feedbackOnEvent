@@ -1,26 +1,26 @@
 var Feedback = require('./Feedback.js')
 
 class FeedbackManager {
-  constructor (mongoClient) {
-    this.mongoClient = mongoClient
+  constructor (numberOfSmileys) {
+    this._numberOfSmileys = numberOfSmileys
+    var HashTable = require('hashtable')
+    this._feedbackHashTable = new HashTable()
   }
 
-  removeFeedback (feedbackID) {
-    return new Promise(function (fulfill, reject) {
-      fulfill()
-    })
+  getSmileysFeedbackCountArray (feedbackID) {
+    var feedbackArray = new Array(this._numberOfSmileys)
+    for (var i = 0; i < this._numberOfSmileys; i++) { feedbackArray[i] = 0 }
+    return feedbackArray
   }
 
-  getFeedback (feedbackID) {
-    return new Promise(function (fulfill, reject) {
-      fulfill(new Feedback())
-    })
+  addSmileyFeedback (feedbackID, smileyID) {
+    var feedback = this._feedbackHashTable.get(feedbackID)
+    feedback.smileysFeedbackCountArray[smilyID]++
   }
 
   createFeedback (feedbackID) {
-    return new Promise(function (fulfill, reject) {
-      fulfill(new Feedback())
-    })
+    newFeedback = new Feedback(feedbackID, this._numberOfSmileys)
+    this._feedbackHashTable.put(feedbackID, newFeedback)
   }
 }
 
