@@ -4,20 +4,20 @@ chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var sinon = require('sinon')
 
-var HashTable = require('../appModules/hashTable.js')
+var HashTable = require('./HashTable.js')
 
 mocha.describe('Hash Table Tests', function () {
   mocha.it('HashTable test 1', function () {
     var hashT = new HashTable()
 
-    hashT.insert('Alex Hawkins', '510-599-1930')
-    // hashT.retrieve();
+    hashT.put('Alex Hawkins', '510-599-1930')
+    // hashT.get();
     // [ , , , [ [ 'Alex Hawkins', '510-599-1930' ] ] ]
-    hashT.insert('Boo Radley', '520-589-1970')
-    // hashT.retrieve();
+    hashT.put('Boo Radley', '520-589-1970')
+    // hashT.get();
     // [ , [ [ 'Boo Radley', '520-589-1970' ] ], , [ [ 'Alex Hawkins', '510-599-1930' ] ] ]
-    hashT.insert('Vance Carter', '120-589-1970').insert('Rick Mires', '520-589-1970').insert('Tom Bradey', '520-589-1970').insert('Biff Tanin', '520-589-1970')
-    // hashT.retrieveAll();
+    hashT.put('Vance Carter', '120-589-1970').put('Rick Mires', '520-589-1970').put('Tom Bradey', '520-589-1970').put('Biff Tanin', '520-589-1970')
+    // hashT.getAll();
     /*
  [ ,
    [ [ 'Boo Radley', '520-589-1970' ],
@@ -32,8 +32,8 @@ mocha.describe('Hash Table Tests', function () {
 
     // overide example (Phone Number Change)
     //
-    hashT.insert('Rick Mires', '650-589-1970').insert('Tom Bradey', '818-589-1970').insert('Biff Tanin', '987-589-1970')
-    // hashT.retrieveAll();
+    hashT.put('Rick Mires', '650-589-1970').put('Tom Bradey', '818-589-1970').put('Biff Tanin', '987-589-1970')
+    // hashT.getAll();
 
     /*
  [ ,
@@ -50,7 +50,7 @@ mocha.describe('Hash Table Tests', function () {
 
     hashT.remove('Rick Mires')
     hashT.remove('Tom Bradey')
-    // hashT.retrieveAll();
+    // hashT.getAll();
 
     /*
  [ ,
@@ -62,8 +62,8 @@ mocha.describe('Hash Table Tests', function () {
    [ [ 'Biff Tanin', '987-589-1970' ] ] ]
 
  */
-    hashT.insert('Dick Mires', '650-589-1970').insert('Lam James', '818-589-1970').insert('Ricky Ticky Tavi', '987-589-1970')
-    hashT.retrieveAll()
+    hashT.put('Dick Mires', '650-589-1970').put('Lam James', '818-589-1970').put('Ricky Ticky Tavi', '987-589-1970')
+    hashT.getAll()
 
     /* NOTICE HOW HASH TABLE HAS NOW DOUBLED IN SIZE UPON REACHING 75% CAPACITY ie 6/8. It is now size 16.
   [,
@@ -85,11 +85,11 @@ mocha.describe('Hash Table Tests', function () {
    ,
    [ [ 'Biff Tanin', '987-589-1970' ] ] ]
 
- */
-    console.log(hashT.retrieve('Lam James')) // 818-589-1970
-    console.log(hashT.retrieve('Dick Mires')) // 650-589-1970
-    console.log(hashT.retrieve('Ricky Ticky Tavi')) // 987-589-1970
-    console.log(hashT.retrieve('Alex Hawkins')) // 510-599-1930
-    console.log(hashT.retrieve('Lebron James')) // null
+
+    console.log(hashT.get('Lam James')) // 818-589-1970
+    console.log(hashT.get('Dick Mires')) // 650-589-1970
+    console.log(hashT.get('Ricky Ticky Tavi')) // 987-589-1970
+    console.log(hashT.get('Alex Hawkins')) // 510-599-1930
+    console.log(hashT.get('Lebron James')) // null*/
   })
 })

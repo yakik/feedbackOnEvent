@@ -1,25 +1,24 @@
 var Feedback = require('./Feedback.js')
+var HashTable = require('./HashTable.js')
 
 class FeedbackManager {
-  constructor (numberOfSmileys) {
-    this._numberOfSmileys = numberOfSmileys
-    var HashTable = require('hashtable')
+  constructor () {
     this._feedbackHashTable = new HashTable()
   }
 
   getSmileysFeedbackCountArray (feedbackID) {
-    var feedbackArray = new Array(this._numberOfSmileys)
-    for (var i = 0; i < this._numberOfSmileys; i++) { feedbackArray[i] = 0 }
-    return feedbackArray
+    return this._feedbackHashTable.get(feedbackID).smileysFeedbackCountArray
   }
 
   addSmileyFeedback (feedbackID, smileyID) {
-    var feedback = this._feedbackHashTable.get(feedbackID)
-    feedback.smileysFeedbackCountArray[smilyID]++
+    var feedbackToUpdate = this._feedbackHashTable.get(feedbackID)
+    feedbackToUpdate.smileysFeedbackCountArray[smileyID]++
+    this._feedbackHashTable.put(feedbackID, feedbackToUpdate)
+
   }
 
-  createFeedback (feedbackID) {
-    newFeedback = new Feedback(feedbackID, this._numberOfSmileys)
+  createFeedback (feedbackID, numberOfSmileys, feedbackArray) {
+    var newFeedback = new Feedback(feedbackID, numberOfSmileys, feedbackArray)
     this._feedbackHashTable.put(feedbackID, newFeedback)
   }
 }

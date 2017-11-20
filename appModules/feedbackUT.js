@@ -7,7 +7,7 @@ var sinon = require('sinon')
 
 /** ****************************************************** */
 
-var Feedback = require('../appModules/Feedback.js')
+var Feedback = require('./Feedback.js')
 
 var currentTestID = 'TESTUT@' + (new Date()).getMilliseconds()
 var numberOfSmileys = 5
