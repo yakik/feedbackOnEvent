@@ -1,11 +1,13 @@
-var HashTable = function() {
+class HashTable {}
+
+constructor HashTable() {
     this._storage = [];
     this._count = 0;
     this._limit = 8;
   }
   
   
-  HashTable.prototype.insert = function(key, value) {
+  insert = function(key, value) {
     //create an index for our storage location by passing it through our hashing function
     var index = this.hashFunc(key, this._limit);
     //retrieve the bucket at this particular index in our storage, if one exists
@@ -16,7 +18,7 @@ var HashTable = function() {
       //create the bucket
       var bucket = [];
       //insert the bucket into our hashTable
-      this._storage[index] = bucket;
+      this._storage[index] =     bucket;
     }
   
     var override = false;
@@ -50,7 +52,7 @@ var HashTable = function() {
   };
   
   
-  HashTable.prototype.remove = function(key) {
+  remove(key) {
     var index = this.hashFunc(key, this._limit);
     var bucket = this._storage[index];
     if (!bucket) {
@@ -74,7 +76,7 @@ var HashTable = function() {
   
   
   
-  HashTable.prototype.retrieve = function(key) {
+  retrieve = function(key) {
     var index = this.hashFunc(key, this._limit);
     var bucket = this._storage[index];
   
@@ -93,7 +95,7 @@ var HashTable = function() {
   };
   
   
-  HashTable.prototype.hashFunc = function(str, max) {
+  hashFunc = function(str, max) {
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
       var letter = str[i];
@@ -104,7 +106,7 @@ var HashTable = function() {
   };
   
   
-  HashTable.prototype.resize = function(newLimit) {
+  resize = function(newLimit) {
     var oldStorage = this._storage;
   
     this._limit = newLimit;
@@ -123,9 +125,11 @@ var HashTable = function() {
   };
   
   
-  HashTable.prototype.retrieveAll = function() {
+  retrieveAll = function() {
     console.log(this._storage);
     //console.log(this._limit);
   };
+
+}
   
  

@@ -4,6 +4,8 @@ chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var sinon = require('sinon')
 
+var HashTable = require('../appModules/hashTable.js')
+
 mocha.describe('Hash Table Tests', function () {
   mocha.it('HashTable test 1', function () {
     var hashT = new HashTable()
