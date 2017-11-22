@@ -1,4 +1,4 @@
-class Feedback {
+class Event {
   constructor (ID, numberOfSmileys, smileysFeedbackCountArray) {
     this._ID = ID
     this._numberOfSmileyTypes = numberOfSmileys
@@ -23,4 +23,4 @@ class Feedback {
   }
 }
 
-module.exports = Feedback
+module.exports = Event
