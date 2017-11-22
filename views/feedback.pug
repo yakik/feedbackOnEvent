@@ -2,7 +2,8 @@ extends layout
 
 block content
   h1= title
+  script(src='/javascripts/feedbackButtonPress.js')
   p Thanks, we appreciate your feedback!
   - for (var i = 0; i <  numberOfSmileyTypes ; i++)
-    button(id=buttonElementIDPrefix + i) 0
+    button(onclick="smileyButtonPress("+feedbackID+","+i+")" id=buttonElementIDPrefix + i) 0
 
