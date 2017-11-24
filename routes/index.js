@@ -6,8 +6,8 @@ var numberOfSmileyTypes = referenceSetup.numberOfSmileyTypes
 var statElementIDPrefix = referenceSetup.statElementIDPrefix
 var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
 
-var FeedbackManager = require('../appModules/FeedbackManager.js')
-var feedbackManager = new FeedbackManager()
+var EventManager = require('../appModules/EventManager.js')
+var eventManager = new EventManager()
 
 /* GET home page. */
 router.get('/feedback/:event', function (req, res, next) {
@@ -19,12 +19,12 @@ router.get('/feedback/:event', function (req, res, next) {
 
 router.get('/feedbackButtonPress/:event-:smileyID', function (req, res, next) {
 
-  feedbackManager.addSmileyFeedback(req.params.event, req.params.smileyID)
+  eventManager.addSmileyFeedback(req.params.event, req.params.smileyID)
 })
 
 router.get('/createFeedback/:event-:numberOfSmileyTypes', function (req, res, next) {
   res.render('main', { title:'Feedback!'})
-  feedback= feedbackManager.createFeedback(req.params.event, req.params.numberOfSmileyTypes)
+  eventManager.createEvent(req.params.event, req.params.numberOfSmileyTypes)
 
 })
 
@@ -32,7 +32,7 @@ router.get('/stat/:event', function (req, res, next) {
   res.render('stat', { title: 'Feedback!',
     numberOfSmileyTypes: numberOfSmileyTypes,
     statElementIDPrefix: statElementIDPrefix,
-    smileysFeedbackCountArrayStats: feedbackManager.getSmileysFeedbackCountArray(req.params.event)
+    smileysFeedbackCountArrayStats: eventManager.getSmileysFeedbackCountArray(req.params.event)
   })
 })
 
