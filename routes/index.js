@@ -22,18 +22,14 @@ router.get('/feedbackButtonPress/:event-:smileyID', function (req, res, next) {
   eventManager.addSmileyFeedback(req.params.event, req.params.smileyID)
 })
 
-router.get('/createFeedback/:event-:numberOfSmileyTypes', function (req, res, next) {
-  res.render('main', { title:'Feedback!'})
-  eventManager.createEvent(req.params.event, req.params.numberOfSmileyTypes)
+router.post('/addEvent', function (req, res, next) {
+  res.redirect('/');
+  eventManager.createEvent(req.body.NewEventName, req.body.NewEventNumberOfSmileys)
 
 })
 
 router.get('/', function (req, res, next) {
-  res.render('main', { title: 'Feedback!',
-    numberOfSmileyTypes: numberOfSmileyTypes,
-    statElementIDPrefix: statElementIDPrefix,
-    smileysFeedbackCountArrayStats: eventManager.getSmileysFeedbackCountArray(req.params.event)
-  })
+  res.render('main', { title: 'Agile Sparks Events'})
 })
 
 module.exports = router

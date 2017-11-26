@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./www.js",
-    "funcTests": "mocha --inspect-brk ./funcTests/functionalTests.js",
+    "funcTests": "mocha ./funcTests/functionalTests.js",
     "unitTests": "mocha ./appModules/*UT.js"
   },
   "dependencies": {
-    "body-parser": "~1.18.2",
+    "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "cookie-parser": "~1.4.3",

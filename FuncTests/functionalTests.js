@@ -37,7 +37,7 @@ test.describe('Functional Test 1', function () {
     var testEventDriver = new EventDriver(driver, testReference, 5, appReference)
     testEventDriver
       .addEvent(testedEvent).then(() => {
-        testEventDriver.openFeedbackPage().then(() => {
+        testEventDriver.openFeedbackPage(testedEvent).then(() => {
           testEventDriver.clickSmiley(testedEvent, 3).then(() => {
             testEventDriver.getStatsForEvent(testedEvent).then((stats) => {
               expect(stats[3]).equals(1, 'counter not 1')

@@ -1,9 +1,8 @@
 var selenium = require('selenium-webdriver')
 
 class EventDriver {
-  constructor (driver, testReference, eventID, numberOfSmileys, appReference) {
+  constructor (driver, testReference, numberOfSmileys, appReference) {
     this.driver = driver
-    this.eventID = eventID
     this.numberOfSmileys = numberOfSmileys
     this.testReference = testReference
     this.appReference = appReference
