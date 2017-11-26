@@ -9,4 +9,8 @@ block content
      label(for='numberOfSmileys') Number of Smileys:
       input#email.form-control(type='text', ID='NewEventNumberOfSmileys', name = 'NewEventNumberOfSmileys')
     button.btn.btn-primary(type='submit' ID='NewEventButton') Create!
+  - for (var i = 0; i < events.length ; i++)
+    textarea(id='eventID:'+events[i].ID) #{events[i].ID}
+    - for (var j = 0; j < events[i].smileysFeedbackCountArray.length ; j++)
+      textarea(id='eventID:'+events[i].ID+'Stat:'j)  #{events[i].smileysFeedbackCountArray[j]}
   

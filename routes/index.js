@@ -29,7 +29,7 @@ router.post('/addEvent', function (req, res, next) {
 })
 
 router.get('/', function (req, res, next) {
-  res.render('main', { title: 'Agile Sparks Events'})
+  res.render('main', { title: 'Agile Sparks Events', events: eventManager.getAllEvents()})
 })
 
 module.exports = router
