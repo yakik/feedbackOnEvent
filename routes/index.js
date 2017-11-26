@@ -18,7 +18,7 @@ router.get('/feedback/:event', function (req, res, next) {
 })
 
 router.post('/feedbackGiven/', function (req, res, next) {
-  res.redirect('/feedback/'+req.body.eventName)
+  res.redirect('/thankYou/'+req.body.eventName)
   eventManager.addSmileyFeedback(req.body.eventName, req.body.smileyID)
 })
 
@@ -29,7 +29,11 @@ router.post('/addEvent', function (req, res, next) {
 })
 
 router.get('/', function (req, res, next) {
-  res.render('main', { title: 'Agile Sparks Events', events: eventManager.getAllEvents()})
+  res.render('main', {title: 'Agile Sparks Events', events: eventManager.getAllEvents()})
+})
+
+router.get('/thankYou/:event', function (req, res, next) {
+  res.render('thankYou', {eventID: req.params.event})
 })
 
 module.exports = router
