@@ -12,18 +12,18 @@ var eventManager = new EventManager()
 /* GET home page. */
 router.get('/feedback/:event', function (req, res, next) {
   res.render('feedback', { title: 'Feedback!',
-    feedbackID: req.params.event,
-    numberOfSmileyTypes: numberOfSmileyTypes,
+    eventID: req.params.event,
+    numberOfSmileys: eventManager.getSmileysFeedbackCountArray(req.params.event).length,
     buttonElementIDPrefix: buttonElementIDPrefix})
 })
 
-router.get('/feedbackButtonPress/:event-:smileyID', function (req, res, next) {
-
-  eventManager.addSmileyFeedback(req.params.event, req.params.smileyID)
+router.post('/feedbackGiven/', function (req, res, next) {
+  res.redirect('/feedback/'+req.body.eventName)
+  eventManager.addSmileyFeedback(req.body.eventName, req.body.smileyID)
 })
 
 router.post('/addEvent', function (req, res, next) {
-  res.redirect('/');
+  res.redirect('/')
   eventManager.createEvent(req.body.NewEventName, req.body.NewEventNumberOfSmileys)
 
 })

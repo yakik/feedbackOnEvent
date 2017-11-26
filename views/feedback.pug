@@ -3,7 +3,12 @@ extends layout
 block content
   h1= title
   script(src='/javascripts/feedbackButtonPress.js')
-  p Thanks, we appreciate your feedback!
-  - for (var i = 0; i <  numberOfSmileyTypes ; i++)
-    button(onclick="smileyButtonPress("+feedbackID+","+i+")" id=buttonElementIDPrefix + i) 0
+  a(href='/') back to main page
+  - for (var i = 0; i <  numberOfSmileys ; i++)
+    form(method='POST' action='/feedbackGiven')
+      div.form-group
+        input#eventName.form-control(type="hidden", ID='NewEventName', name='eventName', value=eventID)
+      div.form-group
+        input#smileyID.form-control(type="hidden", ID='NewEventNumberOfSmileys', name = 'smileyID', value = i)
+      button.btn.btn-primary(type='submit' ID='FeedbackButton') i
 
