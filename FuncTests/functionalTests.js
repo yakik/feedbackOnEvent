@@ -3,80 +3,12 @@ var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var test = require('selenium-webdriver/testing')
+var FuncTestRef = require('./funcTestRef')
+var EventDriver = require('./eventDriver')
 
-var referenceSetup = new (require('../referenceSetup'))()
-var siteAddress = referenceSetup.siteAddress
-var statisticsAddressPrefix = referenceSetup.statisticsAddressPrefix
-var feedbackAddressPrefix = referenceSetup.feedbackAddressPrefix
-var numberOfSmileyTypes = referenceSetup.numberOfSmileyTypes
-var statElementIDPrefix = referenceSetup.statElementIDPrefix
-var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
-
-var currentTest = 'TESTFT@' + (new Date()).getMilliseconds()
-
-var testedFeedbacks = [['scrum_master_3_Nov', 5]['Yaki_Koren_3_Nov', 5]['Yaki_Koren_7_Nov', 5]]
-
-console.log('--------' + siteAddress)
-
-function checkButtonStatistics (ID, driver, test) {
-  driver.get(siteAddress + statisticsAddressPrefix + test)
-    .then(function () {
-      driver.findElement(selenium.By.id(statElementIDPrefix + ID))
-        .getText()
-        .then(statBeforeClickStr => {
-          var statBeforeClick = +statBeforeClickStr
-          driver.get(siteAddress + feedbackAddressPrefix + test).then(() => {
-            driver.findElement(selenium.By.id(buttonElementIDPrefix + ID))
-              .then(button => {
-                button.click().then(() => {
-                  driver.get(siteAddress + statisticsAddressPrefix + test).then(() => {
-                    driver.findElement(selenium.By.id(statElementIDPrefix + ID))
-                      .getText()
-                      .then(statAfterClickStr => {
-                        var statAfterClick = +statAfterClickStr
-                        expect(statAfterClick).equals(statBeforeClick + 1, 'stat not increased by one on stat ' + ID)
-                      })
-                  })
-                })
-              })
-          })
-        })
-    })
-}
-
-function clickFeedbackButtons(driver,testedFeedbacks,numberOfClicks)
-
-function createEvent (driver,testedFeedbacks) {
-  createFeedbacks(driver,testedFeedbacks)
-    .clickFeedbackButtons(driver,testedFeedbacks,)
-  driver.get(siteAddress)
-    .then(function () {
-      for (var i = 0; i < testedFeedbacks.length; i++)
-        {driver.findElement(selenium.By.id(statElementIDPrefix + ID))
-        .getText()
-        .then(statBeforeClickStr => {
-          var statBeforeClick = +statBeforeClickStr
-          driver.get(siteAddress + feedbackAddressPrefix + test).then(() => {
-            driver.findElement(selenium.By.id(buttonElementIDPrefix + ID))
-              .then(button => {
-                button.click().then(() => {
-                  driver.get(siteAddress + statisticsAddressPrefix + test).then(() => {
-                    driver.findElement(selenium.By.id(statElementIDPrefix + ID))
-                      .getText()
-                      .then(statAfterClickStr => {
-                        var statAfterClick = +statAfterClickStr
-                        expect(statAfterClick).equals(statBeforeClick + 1, 'stat not increased by one on stat ' + ID)
-                      })
-                  })
-                })
-              })
-          })
-        })}
-    })
-}
-
-test.describe('My Inner Suite 1', function () {
+test.describe('Functional Test 1', function () {
   var driver
+  var reference = new FuncTestRef('http://localhost:1337/')
 
   test.before(function () {
     driver = new selenium.Builder()
@@ -99,22 +31,18 @@ test.describe('My Inner Suite 1', function () {
 
   })
 
-  test.it('Test Page Title', function () {
-    driver.get(siteAddress + feedbackAddressPrefix + currentTest)
-      .then(function () {
-        driver.getTitle().then(function (title) {
-          expect(title).equals('Feedback!', 'Title not as expected')
+  test.it('check buttons/statistics - one event', function () {
+    var testedEvent = 'ScrumMasters1234'
+    var testEventDriver = new EventDriver(driver, reference, 5)
+    testEventDriver
+      .addEvent(testedEvent).then(() => {
+        testEventDriver.openFeedbackPage().then(() => {
+          testEventDriver.clickSmiley(testedEvent, 3).then(() => {
+            testEventDriver.getStatsForEvent(testedEvent).then((stats) => {
+              expect(stats[3]).equals(1, 'counter not 1')
+            })
+          })
         })
-      })
-  })
-
-  test.it('check buttons/statistics', function () {
-    // create feedbacks
-
-    // check button statistics
-
-    for (var i = 0; i < numberOfSmileyTypes; i++) {
-      checkButtonStatistics(i.toString(), driver, currentTest)
-    }
+      }).catch(err => { console.log(err) })
   })
 })

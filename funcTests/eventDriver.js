@@ -1,13 +1,20 @@
-class EventDriver()
+class EventDriver {
+  constructor (driver, reference, eventID, numberOfSmileys) {
+    this.driver = driver
+    this.eventID = eventID
+    this.numberOfSmileys = numberOfSmileys
+    this.reference = reference
+  }
 
-constructor(eventID,numberOfSmileys){
+  addEvent () {
 
+  }
+
+  clickFeedbackButton (smileyID) {
+
+  }
+
+  getFeedback () {
+  }
 }
-
-clickFeedbackButton(smileyType){
-
-}
-
-getFeedback(){
-    return feedbackArray
-}
+module.exports = EventDriver
