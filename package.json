@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./www.js",
-    "funcTests": "mocha ./funcTests/functionalTests.js",
+    "funcTests": "mocha --inspect-brk ./funcTests/functionalTests.js",
     "unitTests": "mocha ./appModules/*UT.js"
   },
   "dependencies": {

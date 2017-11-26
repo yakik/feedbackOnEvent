@@ -10,6 +10,11 @@ class FuncTestRef {
   getFeedbackURL (eventID) {
     return this.baseURL + 'feedback/' + eventID
   }
+
+
+  getNewEventNameNumberOfSmileysInputID () {
+    return this.numberOfSmileys
+  }
 }
 
 module.exports = FuncTestRef

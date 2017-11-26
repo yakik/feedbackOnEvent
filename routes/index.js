@@ -28,8 +28,8 @@ router.get('/createFeedback/:event-:numberOfSmileyTypes', function (req, res, ne
 
 })
 
-router.get('/stat/:event', function (req, res, next) {
-  res.render('stat', { title: 'Feedback!',
+router.get('/', function (req, res, next) {
+  res.render('main', { title: 'Feedback!',
     numberOfSmileyTypes: numberOfSmileyTypes,
     statElementIDPrefix: statElementIDPrefix,
     smileysFeedbackCountArrayStats: eventManager.getSmileysFeedbackCountArray(req.params.event)

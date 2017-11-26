@@ -1,6 +1,12 @@
 extends layout
-
 block content
   h1= title
-  p Nothing much to say for now.
+  form(method='POST' action='/register')
+    div.form-group
+     label(for='event name') Event Name:
+     input#name.form-control(type='text', ID='NewEventName')
+    div.form-group
+     label(for='numberOfSmileys') Number of Smileys:
+      input#email.form-control(type='text', ID='NewEventNumberOfSmileys')
+    button.btn.btn-primary(type='submit' ID='NewEventButton') Create!
   

@@ -15,6 +15,18 @@ class ReferenceSetup {
     return 5
   }
 
+  get newEventNameInputID () {
+    return 'NewEventName'
+  }
+
+  get newEventNameNumberOfSmileysInputID () {
+    return 'NewEventNumberOfSmileys'
+  }
+
+  get newEventButtonID () {
+    return 'NewEventButton'
+  }
+
   get statElementIDPrefix () {
     return 'stat'
   }

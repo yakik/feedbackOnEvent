@@ -1,13 +1,39 @@
+var selenium = require('selenium-webdriver')
+
 class EventDriver {
-  constructor (driver, reference, eventID, numberOfSmileys) {
+  constructor (driver, testReference, eventID, numberOfSmileys, appReference) {
     this.driver = driver
     this.eventID = eventID
     this.numberOfSmileys = numberOfSmileys
-    this.reference = reference
+    this.testReference = testReference
+    this.appReference = appReference
   }
 
-  addEvent () {
+  setTextField (textFieldID, textFieldNewValue) // Only visible inside Restaurant()
+  {
+    return this.driver.executeScript('document.getElementById(\''+
+      textFieldID+
+      '\').setAttribute(\'value\', \''+
+      textFieldNewValue+
+      '\')')
+  }
 
+  clickButton (buttonID) {
+    this.driver.findElement(selenium.By.id(buttonID))
+      .then(button => {
+        return button.click()
+      })
+  }
+
+  addEvent (eventName) {
+    this.driver.get(this.testReference.getMainPageURL())
+      .then(() => {
+        this.setTextField(this.appReference.newEventNameInputID, eventName).then(() => {
+          this.setTextField(this.appReference.newEventNameNumberOfSmileysInputID, this.numberOfSmileys).then(() => {
+            return this.clickButton(this.appReference.newEventButtonID)
+          })
+        })
+      }).catch(err => { console.log(err) })
   }
 
   clickFeedbackButton (smileyID) {

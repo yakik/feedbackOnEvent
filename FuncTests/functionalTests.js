@@ -5,10 +5,11 @@ var expect = chai.expect
 var test = require('selenium-webdriver/testing')
 var FuncTestRef = require('./funcTestRef')
 var EventDriver = require('./eventDriver')
+var appReference = new (require('../referenceSetup'))()
 
 test.describe('Functional Test 1', function () {
   var driver
-  var reference = new FuncTestRef('http://localhost:1337/')
+  var testReference = new FuncTestRef('http://localhost:1337/')
 
   test.before(function () {
     driver = new selenium.Builder()
@@ -33,7 +34,7 @@ test.describe('Functional Test 1', function () {
 
   test.it('check buttons/statistics - one event', function () {
     var testedEvent = 'ScrumMasters1234'
-    var testEventDriver = new EventDriver(driver, reference, 5)
+    var testEventDriver = new EventDriver(driver, testReference, 5, appReference)
     testEventDriver
       .addEvent(testedEvent).then(() => {
         testEventDriver.openFeedbackPage().then(() => {
