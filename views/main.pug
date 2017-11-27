@@ -3,12 +3,11 @@ block content
   h1= title
   form(method='POST' action='/addEvent')
     div.form-group
-     label(for='event name') Event Name:
-     input#name.form-control(type='text', ID='NewEventName', name='NewEventName')
-    div.form-group
-     label(for='numberOfSmileys') Number of Smileys:
+      label(for='event name')   Event Name:
+      input#name.form-control(type='text', ID='NewEventName', name='NewEventName')
+      label(for='numberOfSmileys')   Number of Smileys:
       input#email.form-control(type='text', ID='NewEventNumberOfSmileys', name = 'NewEventNumberOfSmileys')
-    button.btn.btn-primary(type='submit' ID='NewEventButton') Create!
+      button.btn.btn-primary(class = 'submit' type='submit' ID='NewEventButton') Create event!
   - for (var i = 0; i < events.length ; i++)
     div.textarea(id='eventID:'+events[i].ID) #{events[i].ID}
       a(href='/feedback/' + events[i].ID) provideFeedback

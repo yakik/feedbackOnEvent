@@ -1,7 +1,0 @@
-extends layout
-
-block content
-  h1= title
-  p Thanks, we appreciate your feedback!
-  - for (var i = 0; i < numberOfSmileyTypes ; i++)
-    textarea(id=statElementIDPrefix + i) #{smileysFeedbackCountArrayStats[i]}

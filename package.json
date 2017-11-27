@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./www.js",
     "funcTests": "mocha ./funcTests/functionalTests.js",
-    "unitTests": "mocha ./appModules/*UT.js"
+    "unitTests": "mocha ./appModules/*UT.js",
+    "refresh": " nodemon www.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",

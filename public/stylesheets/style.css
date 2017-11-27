@@ -7,7 +7,7 @@ a {
   color: #00B7FF;
 }
 
-button {
+button.feedback {
   background-color: #4CAF50; /* Green */
   border: 2px solid white;
   color: white;
@@ -16,4 +16,15 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 24px;
+}
+
+button.submit {
+  background-color: white; /* Green */
+  border: 2px solid black;
+  color: black;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
 }
