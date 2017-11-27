@@ -3,14 +3,20 @@ block content
   h1= title
   form(method='POST' action='/addEvent')
     div.form-group
-      label(for='event name')   Event Name:
+      label(for='event name')   New Event Name:
       input#name.form-control(type='text', ID='NewEventName', name='NewEventName')
       label(for='numberOfSmileys')   Number of Smileys:
       input#email.form-control(type='text', ID='NewEventNumberOfSmileys', name = 'NewEventNumberOfSmileys')
       button.btn.btn-primary(class = 'submit' type='submit' ID='NewEventButton') Create event!
   - for (var i = 0; i < events.length ; i++)
-    div.textarea(id='eventID:'+events[i].ID) #{events[i].ID}
-      a(href='/feedback/' + events[i].ID) provideFeedback
-    - for (var j = 0; j < events[i].smileysFeedbackCountArray.length ; j++)
-      textarea(id='eventID:'+events[i].ID+'Stat:'+j)  #{events[i].smileysFeedbackCountArray[j]}
+    div
+      label(class = 'eventName' id='eventID:'+events[i].ID) Event:#{events[i].ID}
+      a(href='/feedback/' + events[i].ID) Provide Feedback Here
+    table
+      tr
+        td
+          label(class='stat') Provided Feedback:
+        - for (var j = 0; j < events[i].smileysFeedbackCountArray.length ; j++)
+          td(class='stat')    
+            label(class='stat' id='eventID:'+events[i].ID+'Stat:'+j) #{events[i].smileysFeedbackCountArray[j]} click(s)
   

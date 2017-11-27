@@ -3,8 +3,21 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+label.eventName {
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+label.stat {
+  padding: 10px;
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
 a {
   color: #00B7FF;
+}
+
+td.stat {
+  border: 1px solid black;
 }
 
 button.feedback {
