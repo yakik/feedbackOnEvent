@@ -11,5 +11,7 @@ block content
           form(method='POST' action='/feedbackGiven')
             input#eventName.form-control(type="hidden", ID='NewEventName', name='eventName', value=eventID)
             input#smileyID.form-control(type="hidden", ID='NewEventNumberOfSmileys', name = 'smileyID', value = i)
-            button.btn.btn-primary(class = 'feedback' type='submit' ID='FeedbackButton') #{i}
+            button.btn.btn-primary(class = 'feedback' type='submit' ID='FeedbackButton')
+              img(src="/images/Smiley"+i+".png" class='feedback')
+
 

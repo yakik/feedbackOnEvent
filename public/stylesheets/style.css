@@ -21,14 +21,20 @@ td.stat {
 }
 
 button.feedback {
-  background-color: #4CAF50; /* Green */
-  border: 2px solid white;
+  background-color: white; /* Green */
   color: white;
-  padding: 15px 32px;
+  padding: 0px 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 24px;
+  /*font-size: 24px;*/
+  border-radius: 100%;
+  border-color: white;
+  border: none
+}
+
+img.feedback {
+  border-radius: 100%;
 }
 
 button.submit {
