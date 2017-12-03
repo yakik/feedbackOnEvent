@@ -1,5 +1,5 @@
 class FuncTestRef {
-  constructor (baseURL, numberOfSmileys) {
+  constructor (baseURL) {
     this.baseURL = baseURL
   }
 
@@ -12,9 +12,6 @@ class FuncTestRef {
   }
 
 
-  getNewEventNameNumberOfSmileysInputID () {
-    return this.numberOfSmileys
-  }
 }
 
 module.exports = FuncTestRef

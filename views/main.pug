@@ -4,9 +4,9 @@ block content
   form(method='POST' action='/addEvent')
     div.form-group
       label(for='event name')   New Event Name:
-      input#name.form-control(type='text', ID='NewEventName', name='NewEventName')
+      input#NewEventName.form-control(type='text', name='NewEventName')
       //label(for='numberOfSmileys')   Number of Smileys:
-      input#email.form-control(type='hidden', value=5,ID='NewEventNumberOfSmileys', name = 'NewEventNumberOfSmileys')
+      input#NewEventNumberOfSmileys.form-control(type='hidden', value=5, name='NewEventNumberOfSmileys')
       button.btn.btn-primary(class = 'submit' type='submit' ID='NewEventButton') Create event!
   - for (var i = 0; i < events.length ; i++)
     div

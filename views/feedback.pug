@@ -8,10 +8,10 @@ block content
     tr
       - for (var i = 0; i <  numberOfSmileys ; i++)
         td
-          form(method='POST' action='/feedbackGiven')
+          form(method='POST' action='/feedbackGiven' id='button'+i)
             input#eventName.form-control(type="hidden", ID='NewEventName', name='eventName', value=eventID)
             input#smileyID.form-control(type="hidden", ID='NewEventNumberOfSmileys', name = 'smileyID', value = i)
-            button.btn.btn-primary(class = 'feedback' type='submit' ID='FeedbackButton')
+            button#feedbackButton.btn.btn-primary(class = 'feedback' type='submit')
               img(src="/images/Smiley"+i+".png" class='feedback')
 
 

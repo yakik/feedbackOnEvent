@@ -1,45 +1,77 @@
 var selenium = require('selenium-webdriver')
+var Promise = require('Promise')
 
 class EventDriver {
-  constructor (driver, testReference, numberOfSmileys, appReference) {
-    this.driver = driver
-    this.numberOfSmileys = numberOfSmileys
+  constructor (testReference, appReference) {
     this.testReference = testReference
     this.appReference = appReference
+    this.driver = new selenium.Builder().forBrowser('chrome').build()
   }
 
-  setTextField (textFieldID, textFieldNewValue) // Only visible inside Restaurant()
-  {
-    return this.driver.executeScript('document.getElementById(\''+
-      textFieldID+
-      '\').setAttribute(\'value\', \''+
-      textFieldNewValue+
-      '\')')
+  quit () {
+    this.driver.quit()
   }
 
-  clickButton (buttonID) {
-    this.driver.findElement(selenium.By.id(buttonID))
-      .then(button => {
-        return button.click()
-      })
+  setTextField (textFieldID, textFieldNewValue) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      me.driver.findElement(selenium.By.id(textFieldID))
+        .then((element) => {
+          element.sendKeys(textFieldNewValue).then(() => {
+            resolve(element)
+          }).catch((err) => { reject(err) })
+        }).catch((err) => { reject(err) })
+    })
   }
 
   addEvent (eventName) {
-    this.driver.get(this.testReference.getMainPageURL())
-      .then(() => {
-        this.setTextField(this.appReference.newEventNameInputID, eventName).then(() => {
-          this.setTextField(this.appReference.newEventNameNumberOfSmileysInputID, this.numberOfSmileys).then(() => {
-            return this.clickButton(this.appReference.newEventButtonID)
-          })
-        })
-      }).catch(err => { console.log(err) })
+    var me = this
+    return new Promise(function (resolve, reject) {
+      me.driver.get(me.testReference.getMainPageURL())
+        .then(() => {
+          me.setTextField(me.appReference.newEventNameInputID, eventName).then((element) => {
+            element.submit().then(() => {
+              resolve()
+            }).catch(err => { reject(err) })
+          }).catch(err => { reject(err) })
+        }).catch(err => { reject(err) })
+    })
   }
 
-  clickFeedbackButton (smileyID) {
-
+  clickSmiley (smileyID) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      me.driver.findElement(selenium.By.id('button' + smileyID)).then(form => {
+        form.submit().then(() => {
+          resolve()
+        }).catch((err) => { reject(err) })
+      }).catch(err => { reject(err) })
+    })
   }
 
-  getFeedback () {
+  openFeedbackPage (eventName) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      me.driver.get(me.testReference.getFeedbackURL(eventName))
+        .then(() => {
+          resolve()
+        }).catch(err => { reject(err) })
+    })
+  }
+
+  getStatForEvent (eventName, smileyID) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      me.driver.get(me.testReference.getMainPageURL())
+        .then(() => {
+          me.driver.findElement(selenium.By.id('eventID:' + eventName+ 'Stat:' + smileyID)).then(element => {
+            element.getText().then((text) => {
+              resolve(text)
+            }).catch(err => { reject(err) })
+          }).catch(err => { reject(err) })
+        }).catch(err => { reject(err) })
+    })
   }
 }
+
 module.exports = EventDriver

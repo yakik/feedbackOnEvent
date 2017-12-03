@@ -6,20 +6,17 @@ var test = require('selenium-webdriver/testing')
 var FuncTestRef = require('./funcTestRef')
 var EventDriver = require('./eventDriver')
 var appReference = new (require('../referenceSetup'))()
+var driver
 
 test.describe('Functional Test 1', function () {
-  var driver
   var testReference = new FuncTestRef('http://localhost:1337/')
 
   test.before(function () {
-    driver = new selenium.Builder()
-      .forBrowser('chrome')
-      .build()
-    this.timeout(10000)
+    this.timeout(50000)
   })
 
   test.after(function () {
-    driver.quit()
+
   })
 
   test.beforeEach(function () {
@@ -34,16 +31,19 @@ test.describe('Functional Test 1', function () {
 
   test.it('check buttons/statistics - one event', function () {
     var testedEvent = 'ScrumMasters1234'
-    var testEventDriver = new EventDriver(driver, testReference, 5, appReference)
+    var testEventDriver = new EventDriver(testReference, appReference)
+    this.timeout(100000)
     testEventDriver
       .addEvent(testedEvent).then(() => {
         testEventDriver.openFeedbackPage(testedEvent).then(() => {
-          testEventDriver.clickSmiley(testedEvent, 3).then(() => {
-            testEventDriver.getStatsForEvent(testedEvent).then((stats) => {
-              expect(stats[3]).equals(1, 'counter not 1')
-            })
-          })
-        })
+          testEventDriver.clickSmiley(3).then(() => {
+            testEventDriver.getStatForEvent(testedEvent, 3).then((text) => {
+              var stat = text.split(' ', 1)
+              expect(parseInt(stat[0])).equals(1, 'counter not 1')
+              testEventDriver.quit()
+            }).catch(err => { console.log(err) })
+          }).catch(err => { console.log(err) })
+        }).catch(err => { console.log(err) })
       }).catch(err => { console.log(err) })
   })
 })
