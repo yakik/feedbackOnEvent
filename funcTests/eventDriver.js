@@ -49,13 +49,29 @@ class EventDriver {
     })
   }
 
+  getEventIDOnStatPage (eventName) {
+  // assumes we are on the main page
+    var me = this
+    return new Promise(function (resolve, reject) {
+    // a(href='/feedback/' + events[i].ID id='eventID:'+events[i].ID+'Href')
+      me.driver.findElement(selenium.By.id('eventIDofEventName:' + eventName)).then(element => {
+        element.getAttribute('value').then((eventID) => {
+          resolve(eventID)
+        }).catch(err => { reject(err) })
+      }).catch(err => { reject(err) })
+    })
+  }
+
   openFeedbackPage (eventName) {
     var me = this
     return new Promise(function (resolve, reject) {
-      me.driver.get(me.testReference.getFeedbackURL(eventName))
-        .then(() => {
-          resolve()
-        }).catch(err => { reject(err) })
+      // a(href='/feedback/' + events[i].ID id='eventID:'+events[i].ID+'Href')
+      me.getEventIDOnStatPage(eventName).then((eventID) => {
+        me.driver.get(me.testReference.getFeedbackURL(eventID))
+          .then(() => {
+            resolve()
+          }).catch(err => { reject(err) })
+      }).catch(err => { reject(err) })
     })
   }
 
@@ -64,9 +80,11 @@ class EventDriver {
     return new Promise(function (resolve, reject) {
       me.driver.get(me.testReference.getMainPageURL())
         .then(() => {
-          me.driver.findElement(selenium.By.id('eventID:' + eventName+ 'Stat:' + smileyID)).then(element => {
-            element.getText().then((text) => {
-              resolve(text)
+          me.getEventIDOnStatPage(eventName).then((eventID) => {
+            me.driver.findElement(selenium.By.id('eventID:' + eventID + 'Stat:' + smileyID)).then(element => {
+              element.getText().then((text) => {
+                resolve(text)
+              }).catch(err => { reject(err) })
             }).catch(err => { reject(err) })
           }).catch(err => { reject(err) })
         }).catch(err => { reject(err) })

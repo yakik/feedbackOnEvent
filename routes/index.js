@@ -9,6 +9,7 @@ var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
 var EventManager = require('../appModules/EventManager.js')
 var eventManager = new EventManager()
 
+
 /* GET home page. */
 router.get('/feedback/:event', function (req, res, next) {
   res.render('feedback', { title: 'Feedback!',
@@ -18,8 +19,8 @@ router.get('/feedback/:event', function (req, res, next) {
 })
 
 router.post('/feedbackGiven/', function (req, res, next) {
-  res.redirect('/thankYou/'+req.body.eventName)
-  eventManager.addSmileyFeedback(req.body.eventName, req.body.smileyID)
+  res.redirect('/thankYou/' + req.body.eventID)
+  eventManager.addSmileyFeedback(req.body.eventID, req.body.smileyID)
 })
 
 router.post('/addEvent', function (req, res, next) {

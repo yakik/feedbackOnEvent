@@ -6,12 +6,13 @@ block content
       label(for='event name')   New Event Name:
       input#NewEventName.form-control(type='text', name='NewEventName')
       //label(for='numberOfSmileys')   Number of Smileys:
-      input#NewEventNumberOfSmileys.form-control(type='hidden', value=5, name='NewEventNumberOfSmileys')
+      input#NewEventNumberOfSmileys.form-control(type='hidden', value=4, name='NewEventNumberOfSmileys')
       button.btn.btn-primary(class = 'submit' type='submit' ID='NewEventButton') Create event!
   - for (var i = 0; i < events.length ; i++)
     div
-      label(class = 'eventName' id='eventID:'+events[i].ID) Event:#{events[i].ID}
-      a(href='/feedback/' + events[i].ID) Provide Feedback Here
+      label(class = 'eventName' id='eventID:'+events[i].ID) Event:#{events[i].Name}
+      a(href='/feedback/' + events[i].ID id='eventID:'+events[i].ID+'Href') Provide Feedback Here
+      label(type='hidden' id='eventIDofEventName:'+events[i].Name value=events[i].ID)
     table
       tr
         td

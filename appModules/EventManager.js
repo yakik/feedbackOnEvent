@@ -4,6 +4,7 @@ var HashTable = require('./HashTable.js')
 class EventManager {
   constructor () {
     this._eventHashTable = new HashTable()
+    this._eventSequence = 1
   }
 
   getSmileysFeedbackCountArray (eventID) {
@@ -40,11 +41,15 @@ class EventManager {
     return allEvents
   }
 
-  createEvent (eventID, numberOfSmileys, feedbackArray) {
-    var newEvent = new Event(eventID, numberOfSmileys, feedbackArray)
+  createEvent (eventName, numberOfSmileys, feedbackArray) {
+    var newEvent = new Event((this._eventSequence++).toString(), eventName, numberOfSmileys, feedbackArray)
 
-    this._eventHashTable.put(eventID, newEvent)
+    this._eventHashTable.put(newEvent.ID, newEvent)
     return newEvent
+  }
+
+  loadFromDB () {
+
   }
 }
 

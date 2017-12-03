@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  body(bgcolor="#5288BB")
   h1= title
   script(src='/javascripts/feedbackButtonPress.js')
   a(href='/') back to main page
@@ -9,7 +10,7 @@ block content
       - for (var i = 0; i <  numberOfSmileys ; i++)
         td
           form(method='POST' action='/feedbackGiven' id='button'+i)
-            input#eventName.form-control(type="hidden", ID='NewEventName', name='eventName', value=eventID)
+            input#eventID.form-control(type="hidden", ID='NewEventName', name='eventID', value=eventID)
             input#smileyID.form-control(type="hidden", ID='NewEventNumberOfSmileys', name = 'smileyID', value = i)
             button#feedbackButton.btn.btn-primary(class = 'feedback' type='submit')
               img(src="/images/Smiley"+i+".png" class='feedback')
