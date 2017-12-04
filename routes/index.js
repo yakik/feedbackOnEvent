@@ -19,7 +19,7 @@ router.get('/feedback/:event', function (req, res, next) {
 })
 
 router.post('/feedbackGiven/', function (req, res, next) {
-  res.redirect('/thankYou/' + req.body.eventID)
+ // res.redirect('/thankYou/' + req.body.eventID)
   eventManager.addSmileyFeedback(req.body.eventID, req.body.smileyID)
 })
 

@@ -2,17 +2,14 @@ extends layout
 
 block content
   body(bgcolor="#5288BB")
-  h1= title
   script(src='/javascripts/feedbackButtonPress.js')
-  a(href='/') back to main page
-  table
-    tr
-      - for (var i = 0; i <  numberOfSmileys ; i++)
-        td
-          form(method='POST' action='/feedbackGiven' id='button'+i)
-            input#eventID.form-control(type="hidden", ID='NewEventName', name='eventID', value=eventID)
-            input#smileyID.form-control(type="hidden", ID='NewEventNumberOfSmileys', name = 'smileyID', value = i)
-            button#feedbackButton.btn.btn-primary(class = 'feedback' type='submit')
-              img(src="/images/Smiley"+i+".png" class='feedback')
+  div#menu_outer
+    div(class='table')
+      ul#feedbackButtons
+        - for (var i = 0; i <  numberOfSmileys ; i++)
+          li
+            button#feedbackButton(class = 'feedbackButton' type='submit' onclick='smileyButtonPress (' +eventID+ ', ' +i+ ')')
+              img(src="/images/Smiley"+i+".png" class='feedbackButtonImage')
+  img(src='images/smiley.gif" alt="Smiley face" height="42" width="42">
 
 

@@ -20,22 +20,49 @@ td.stat {
   border: 1px solid black;
 }
 
-button.feedback {
-  background-color: white; /* Green */
-  color: white;
-  padding: 0px 0px;
+button.feedbackButton {
+  background-color: #5288BB;
+  color: #5288BB;
+  padding: 0px 40px 0px 40px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   /*font-size: 24px;*/
   border-radius: 100%;
-  border-color: white;
+ 
   border: none
 }
 
-img.feedback {
+img.feedbackButtonImage {
   border-radius: 100%;
 }
+#menu-outer {
+	height: 84px;
+	background: url(images/bar-bg.jpg) repeat-x;
+}
+
+.table {
+	display: table;   /* Allow the centering to work */
+	margin: 0 auto;
+}
+
+ul#feedbackButtons {
+	min-width: 696px;
+	list-style: none;
+	padding-top: 20px;
+	}
+	ul#feedbackButtons li {
+		display: inline;
+	}
+/*ul.feedbackButtons {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li.feedbackButtons {
+    display: inline;
+}*/
 
 button.submit {
   background-color: white; /* Green */
