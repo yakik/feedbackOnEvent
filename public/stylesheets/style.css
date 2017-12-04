@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+ 
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -23,37 +23,39 @@ td.stat {
 button.feedbackButton {
   background-color: #5288BB;
   color: #5288BB;
-  padding: 0px 40px 0px 40px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  /*font-size: 24px;*/
   border-radius: 100%;
- 
   border: none
 }
 
 img.feedbackButtonImage {
   border-radius: 100%;
 }
-#menu-outer {
-	height: 84px;
-	background: url(images/bar-bg.jpg) repeat-x;
+
+#howWasIt {
+  display: block;
+  margin: auto;
+  width: 40%;
+  padding: 40px 0px 0px 0px;
 }
 
-.table {
+#agileSparksLogo
+{
+  float: right;
+
+}
+
+.feedbackTable {
 	display: table;   /* Allow the centering to work */
-	margin: 0 auto;
+  min-width: 100%;
+  padding-top: 5%;
+
+  align-self:  center;
 }
 
-ul#feedbackButtons {
-	min-width: 696px;
-	list-style: none;
-	padding-top: 20px;
-	}
-	ul#feedbackButtons li {
-		display: inline;
-	}
+td.feedbackTD{
+  text-align: center;
+}
+
 /*ul.feedbackButtons {
     list-style-type: none;
     margin: 0;

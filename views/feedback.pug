@@ -3,13 +3,20 @@ extends layout
 block content
   body(bgcolor="#5288BB")
   script(src='/javascripts/feedbackButtonPress.js')
-  div#menu_outer
-    div(class='table')
-      ul#feedbackButtons
+
+  div
+    img#agileSparksLogo(src='/images/AgileSparks.png')
+  div
+    table(class='feedbackTable')
+      tr
         - for (var i = 0; i <  numberOfSmileys ; i++)
-          li
+          td(class='feedbackTD')
             button#feedbackButton(class = 'feedbackButton' type='submit' onclick='smileyButtonPress (' +eventID+ ', ' +i+ ')')
               img(src="/images/Smiley"+i+".png" class='feedbackButtonImage')
-  img(src='images/smiley.gif" alt="Smiley face" height="42" width="42">
+
+  div
+    img#howWasIt(src='/images/HowWasIt.png') 
+  
+  
 
 
