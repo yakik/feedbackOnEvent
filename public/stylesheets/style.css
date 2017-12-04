@@ -20,15 +20,14 @@ td.stat {
   border: 1px solid black;
 }
 
-button.feedbackButton {
-  background-color: #5288BB;
-  color: #5288BB;
-  border-radius: 100%;
-  border: none
-}
-
 img.feedbackButtonImage {
   border-radius: 100%;
+}
+
+img.feedbackButtonImage:active {
+   transform: scale(2);
+   
+
 }
 
 #howWasIt {
@@ -47,7 +46,7 @@ img.feedbackButtonImage {
 .feedbackTable {
 	display: table;   /* Allow the centering to work */
   min-width: 100%;
-  padding-top: 5%;
+  padding-top: 9%;
 
   align-self:  center;
 }
