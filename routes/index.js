@@ -23,6 +23,7 @@ storage.init().then(() => {
     })
 
     router.post('/removeEvent/', function (req, res, next) {
+      res.send()
       eventManager.removeEvent(req.body.eventID)
       eventManager.persist('ProdEventManager', storage).then(() => {
         console.log('set success(feedback)')
@@ -31,7 +32,10 @@ storage.init().then(() => {
 
     router.post('/feedbackGiven/', function (req, res, next) {
       // res.redirect('/thankYou/' + req.body.eventID)
+      console.log('before')
+      res.redirect('/')
       eventManager.addSmileyFeedback(req.body.eventID, req.body.smileyID)
+      console.log('after')
       eventManager.persist('ProdEventManager', storage).then(() => {
         console.log('set success(feedback)')
       }).catch(err => { console.log(err) })
