@@ -4,6 +4,38 @@ class HashTable {
     this._count = 0
     this._limit = 8
   }
+  get count () {
+    return this._count
+  }
+
+  clearPersistence (key, storage) {
+    return new Promise(function (resolve, reject) {
+      storage.removeItem(key).then(() => {
+        resolve()
+      }).catch(err => { reject(err) })
+    })
+  }
+
+  persist (key, storage) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      storage.setItem(key, {storage: me._storage, count: me._count, limit: me._limit}).then(() => {
+        resolve()
+      }).catch(err => { reject(err) })
+    })
+  }
+
+  load (key, storage) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      storage.getItem(key).then((persistedItems) => {
+        me._storage = persistedItems.storage
+        me._count = persistedItems.count
+        me._limit = persistedItems.limit
+        resolve()
+      }).catch(err => { reject(err) })
+    })
+  }
 
   put (key, value) {
     // create an index for our storage location by passing it through our hashing function
@@ -64,7 +96,7 @@ class HashTable {
         bucket.splice(i, 1)
         this._count--
         if (this._count < this._limit * 0.25) {
-          this._resize(this._limit / 2)
+          this.resize(this._limit / 2)
         }
         return tuple[1]
       }
@@ -118,7 +150,7 @@ class HashTable {
   };
 
   getAll () {
-   // console.log(this._storage)
+    // console.log(this._storage)
     // console.log(this._limit);
   };
 }

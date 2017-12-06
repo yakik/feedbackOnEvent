@@ -41,8 +41,8 @@ class EventDriver {
   clickSmiley (smileyID) {
     var me = this
     return new Promise(function (resolve, reject) {
-      me.driver.findElement(selenium.By.id('button' + smileyID)).then(form => {
-        form.submit().then(() => {
+      me.driver.findElement(selenium.By.id('button' + smileyID)).then(element => {
+        element.click().then(() => {
           resolve()
         }).catch((err) => { reject(err) })
       }).catch(err => { reject(err) })

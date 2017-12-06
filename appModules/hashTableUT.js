@@ -7,6 +7,34 @@ var sinon = require('sinon')
 var HashTable = require('./HashTable.js')
 
 mocha.describe('Hash Table Tests', function () {
+  mocha.it('test hash table persistence', (done) => {
+    var storage = require('node-persist')
+    storage.init().then(() => {
+      var hashT = new HashTable()
+      // clear previous tests
+      hashT.clearPersistence('UTHash', storage).then(() => {
+        for (var i = 0; i < 5; i++) {
+          hashT.put(i, 'item number ' + i)
+        }
+
+        hashT.persist('UTHash', storage).then(() => {
+        // clear the hash
+          for (var i = 0; i < 5; i++) {
+            hashT.remove(i)
+          }
+          expect(hashT.count).equals(0, 'hash not empty')
+          hashT.load('UTHash', storage).then(() => {
+            expect(hashT.count).equals(5, 'number of items in hash not as expected')
+            for (var i = 0; i < 5; i++) {
+              expect(hashT.get(i)).equals('item number ' + i, 'hash item not as expected')
+            }
+            done()
+          }).catch(err => { console.log(err) })
+        }).catch(err => { console.log(err) })
+      }).catch(err => { console.log(err) })
+    }).catch(err => { console.log(err) })
+  })
+
   mocha.it('HashTable test 1', function () {
     var hashT = new HashTable()
 
@@ -85,11 +113,10 @@ mocha.describe('Hash Table Tests', function () {
    ,
    [ [ 'Biff Tanin', '987-589-1970' ] ] ]
 
-
     console.log(hashT.get('Lam James')) // 818-589-1970
     console.log(hashT.get('Dick Mires')) // 650-589-1970
     console.log(hashT.get('Ricky Ticky Tavi')) // 987-589-1970
     console.log(hashT.get('Alex Hawkins')) // 510-599-1930
-    console.log(hashT.get('Lebron James')) // null*/
+    console.log(hashT.get('Lebron James')) // null */
   })
 })

@@ -11,7 +11,7 @@ block content
       tr
         - for (var i = 0; i <  numberOfSmileys ; i++)
           td(class='feedbackTD')
-            img(src="/images/Smiley"+i+".png" class='feedbackButtonImage' onclick='smileyButtonPress (' +eventID+ ', ' +i+ ')')
+            img(id='button'+i src="/images/Smiley"+i+".png" class='feedbackButtonImage' onclick='smileyButtonPress (' +eventID+ ', ' +i+ ')')
 
   div
     img#howWasIt(src='/images/HowWasIt.png') 

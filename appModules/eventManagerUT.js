@@ -12,7 +12,7 @@ var EventManager = require('./eventManager.js')
 
 mocha.describe('event Manager Tests', function () {
   mocha.it('test new event without event values', function () {
-    var testEventManager = new EventManager()
+    var testEventManager = new EventManager('Test')
     var currentTestID = testEventManager.createEvent(currentTestName, numberOfSmileys).ID
 
     var testSmileysFeedbackCountArray = testEventManager.getSmileysFeedbackCountArray(currentTestID)
@@ -25,7 +25,7 @@ mocha.describe('event Manager Tests', function () {
   })
 
   mocha.it('get smileys count from a specific event', function () {
-    var testEventManager = new EventManager()
+    var testEventManager = new EventManager('Test')
     var feedback = new Array(numberOfSmileys)
     for (var i = 0; i < numberOfSmileys; i++) { feedback[i] = ((i + 1) * 4) }
     var currentTestID = testEventManager.createEvent(currentTestName, numberOfSmileys, feedback).ID
@@ -40,7 +40,7 @@ mocha.describe('event Manager Tests', function () {
       if (a[0] > b[0]) { return 1 }
       return 0
     }
-    var testEventManager = new EventManager()
+    var testEventManager = new EventManager('Test')
     var eventNameArray = []
     for (var i = 0; i < 20; i++) {
       eventNameArray[i] = []
@@ -77,22 +77,39 @@ mocha.describe('event Manager Tests', function () {
     }
   })
 
-  mocha.it('test loading events (not integrated with DB', function () {
-    var testEventManager = new EventManager()
-    var testEventManager2 = new EventManager()
-    for (var i = 0; i < 2; i++) {
-      testEventManager2.createEvent('Event' + i, 5, [i, i + 1, i + 2, i + 3, i + 4])
-    }
 
-    // mock 2 events in DB
-    testEventManager.loadFromDB()
+  mocha.it('test event manager persistence', (done) => {
+    var storage = require('node-persist')
+    storage.init().then(() => {
+      var testEventManager = new EventManager()
+      var testEventManager2 = new EventManager()
+      // clear previous tests
+      testEventManager.clearPersistence('UTEventManager', storage).then(() => {
+        for (var i = 0; i < 5; i++) {
+          testEventManager.createEvent('Event' + i, 5, [i, i + 1, i + 2, i + 3, i + 4])
+          testEventManager2.createEvent('Event' + i, 5, [i, i + 1, i + 2, i + 3, i + 4])
+        }
 
-    var allEvents = testEventManager.getAllEvents()
-    var allEvents2 = testEventManager.getAllEvents()
-    for (i = 0; i < 2; i++) {
-      expect(allEvents[i].ID).equals(allEvents2[i].ID, 'ID not the same')
-      expect(allEvents[i].Name).equals(allEvents2[i].Name, 'Name not the same')
-      for (var j = 0; j < 5; j++) { expect(allEvents[i].smileysFeedbackCountArray[j]).equals(allEvents2[i].smileysFeedbackCountArray[j], 'feedback array ' + i + ' not equal') }
-    }
+        testEventManager.persist('UTEventManager', storage).then(() => {
+          // clear the hash
+          var allEventsForRemoval = testEventManager.getAllEvents()
+          for (var i = 0; i < allEventsForRemoval.length; i++) {
+            testEventManager.removeEvent(allEventsForRemoval[i].ID)
+          }
+          expect(testEventManager.count).equals(0, 'event Manager not empty')
+          testEventManager.load('UTEventManager', storage).then(() => {
+            expect(testEventManager.count).equals(5, 'number of events not as expected')
+            var allEvents = testEventManager.getAllEvents()
+            var allEvents2 = testEventManager2.getAllEvents()
+            for (var i = 0; i < 5; i++) {
+              expect(allEvents[i].ID).equals(allEvents2[i].ID, 'ID not the same')
+              expect(allEvents[i].Name).equals(allEvents2[i].Name, 'Name not the same')
+              for (var j = 0; j < 5; j++) { expect(allEvents[i].smileysFeedbackCountArray[j]).equals(allEvents2[i].smileysFeedbackCountArray[j], 'feedback array ' + i + ' not equal') }
+            }
+            done()
+          }).catch(err => { console.log(err) })
+        }).catch(err => { console.log(err) })
+      }).catch(err => { console.log(err) })
+    }).catch(err => { console.log(err) })
   })
 })
