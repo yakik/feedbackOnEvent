@@ -21,7 +21,7 @@ class EventManager {
     var me = this
     return new Promise(function (resolve, reject) {
       storage.removeItem(key).then(() => {
-        me._eventHashTable.clearPersistence(key, storage).then(() => {
+        me._eventHashTable.clearPersistence(key+'Hash', storage).then(() => {
           resolve()
         }).catch(err => { reject(err) })
       }).catch(err => { reject(err) })
@@ -32,7 +32,7 @@ class EventManager {
     var me = this
     return new Promise(function (resolve, reject) {
       storage.setItem(key, {ID: me._ID, eventSequence: me._eventSequence}).then(() => {
-        me._eventHashTable.persist(key, storage).then(() => {
+        me._eventHashTable.persist(key+'Hash', storage).then(() => {
           resolve()
         }).catch(err => { reject(err) })
       }).catch(err => { reject(err) })
@@ -43,11 +43,11 @@ class EventManager {
     var me = this
     return new Promise(function (resolve, reject) {
       storage.getItem(key).then((persistedItems) => {
-        if (persistedItems !== undefined) {
+        if ((persistedItems !== undefined)
+          &&(persistedItems.eventSequence === parseInt(persistedItems.eventSequence, 10))) {
           me._ID = persistedItems.ID
-          me._eventSequence = persistedItems.eventSequence
-          me._limit = persistedItems.limit
-          me._eventHashTable.load(key, storage).then(() => {
+          me._eventSequence = parseInt(persistedItems.eventSequence)
+          me._eventHashTable.load(key+'Hash', storage).then(() => {
             resolve()
           }).catch(err => { reject(err) })
         } else {
@@ -57,12 +57,20 @@ class EventManager {
     })
   }
 
+  getEvent (eventID) {
+    var fromHash = this._eventHashTable.get(eventID)
+    return new Event(fromHash._ID
+      , fromHash._Name
+      , fromHash._numberOfSmileys
+      , fromHash._smileysFeedbackCountArray)
+  }
+
   getSmileysFeedbackCountArray (eventID) {
-    return this._eventHashTable.get(eventID).smileysFeedbackCountArray
+    return this.getEvent(eventID).smileysFeedbackCountArray
   }
 
   addSmileyFeedback (eventID, smileyID) {
-    var eventToUpdate = this._eventHashTable.get(eventID)
+    var eventToUpdate = this.getEvent(eventID)
 
     eventToUpdate.smileysFeedbackCountArray[smileyID]++
 
@@ -103,16 +111,6 @@ class EventManager {
 
   removeEvent (eventID) {
     this._eventHashTable.remove(eventID)
-  }
-
-  loadFromDB () {
-    var allEventsJSON = EventManagerDBHandler.getAllEventManagerEvents(this._ID)
-    for (var i = 0; i < allEventsJSON.length; i++) {
-      this.createEvent(allEventsJSON[i].eventName,
-        allEventsJSON[i].numberOfSmileys,
-        allEventsJSON[i].feedbackArray)
-    }
-    return this.getAllEvents()
   }
 }
 

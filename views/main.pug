@@ -1,5 +1,6 @@
 extends layout
 block content
+  script(src='/javascripts/removeEventPress.js')
   h1= title
   form(method='POST' action='/addEvent')
     div.form-group
@@ -13,6 +14,7 @@ block content
       label(class = 'eventName' id='eventID:'+events[i].ID) Event:#{events[i].Name}
       a(href='/feedback/' + events[i].ID id='eventID:'+events[i].ID+'Href') Provide Feedback Here
       label(type='hidden' id='eventIDofEventName:'+events[i].Name value=events[i].ID)
+      button(id='removeButton'+i  onclick='removeEventPress (' +events[i].ID + ')') Remove
     table
       tr
         td

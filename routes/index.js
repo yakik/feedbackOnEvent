@@ -22,6 +22,13 @@ storage.init().then(() => {
         buttonElementIDPrefix: buttonElementIDPrefix})
     })
 
+    router.post('/removeEvent/', function (req, res, next) {
+      eventManager.removeEvent(req.body.eventID)
+      eventManager.persist('ProdEventManager', storage).then(() => {
+        console.log('set success(feedback)')
+      }).catch(err => { console.log(err) })
+    })
+
     router.post('/feedbackGiven/', function (req, res, next) {
       // res.redirect('/thankYou/' + req.body.eventID)
       eventManager.addSmileyFeedback(req.body.eventID, req.body.smileyID)
@@ -40,10 +47,6 @@ storage.init().then(() => {
 
     router.get('/', function (req, res, next) {
       res.render('main', {title: 'Agile Sparks Events', events: eventManager.getAllEvents()})
-    })
-
-    router.get('/thankYou/:event', function (req, res, next) {
-      res.render('thankYou', {eventID: req.params.event})
     })
   }).catch(err => { console.log(err) })
 })
