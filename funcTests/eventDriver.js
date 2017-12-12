@@ -8,7 +8,7 @@ class EventDriver {
     this.driver = new selenium.Builder().forBrowser('chrome').build()
   }
 
-  quit () {
+  quit  () {
     this.driver.quit()
   }
 
