@@ -39,51 +39,54 @@ class EventManager {
     })
   }
 
+
+
+
   persistMONGO (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.update(
-        { key: key },
-        {ID: me._ID, eventSequence: me._eventSequence},
-        { upsert: true }
-     ).then(() => {
-        me._eventHashTable.persistMONGO(key+'Hash', storage).then(() => {
+      storage.updateOne(
+        { key:{ $eq: key } },
+        {key: key, ID: me._ID, eventSequence: me._eventSequence},
+        { upsert: true },function(err,res){
+            me._eventHashTable.persistMONGO(key+'Hash', storage).then(() => {
           resolve()
         }).catch(err => { reject(err) })
-      }).catch(err => { reject(err) })
+      })//.catch(err => { reject(err) })
     })
   }
 
   clearPersistenceMONGO (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.remove( { key : key } ).then(() => {
+      storage.remove( { key: { $eq: key } } ,function(err,obj) {
+        if (err) throw err
         me._eventHashTable.clearPersistenceMONGO(key+'Hash', storage).then(() => {
           resolve()
         }).catch(err => { reject(err) })
-      }).catch(err => { reject(err) })
+      })//.catch(err => { reject(err) })
     })
   }
-
-
 
   loadMONGO (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.find({ key : key }).then((persistedItems) => {
+      storage.findOne({ key : { $eq: key } }, function(err, persistedItems) {
+        if (err) throw err;
         if ((persistedItems !== undefined)
           &&(persistedItems.eventSequence === parseInt(persistedItems.eventSequence, 10))) {
           me._ID = persistedItems.ID
           me._eventSequence = parseInt(persistedItems.eventSequence)
-          me._eventHashTable.load(key+'Hash', storage).then(() => {
+          me._eventHashTable.loadMONGO(key+'Hash', storage).then(() => {
             resolve()
           }).catch(err => { reject(err) })
         } else {
           resolve()
         }
-      }).catch(err => { reject(err) })
+      })//.catch(err => { reject(err) })
     })
   }
+
 
   load (key, storage) {
     var me = this

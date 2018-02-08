@@ -41,33 +41,33 @@ mocha.describe('Hash Table Tests', function () {
     })//.catch(err => { console.log(err) })
   })
 
-  mocha.it('test hash table persistence', function() {
-    var storage = require('node-persist')
-    storage.init().then(() => {
-      var hashT = new HashTable()
-      // clear previous tests
-      hashT.clearPersistence('UTHash', storage).then(() => {
-        for (var i = 0; i < 5; i++) {
-          hashT.put(i, 'item number ' + i)
-        }
+  // mocha.it('test hash table persistence', function() {
+  //   var storage = require('node-persist')
+  //   storage.init().then(() => {
+  //     var hashT = new HashTable()
+  //     // clear previous tests
+  //     hashT.clearPersistence('UTHash', storage).then(() => {
+  //       for (var i = 0; i < 5; i++) {
+  //         hashT.put(i, 'item number ' + i)
+  //       }
 
-        hashT.persist('UTHash', storage).then(() => {
-        // clear the hash
-          for (var i = 0; i < 5; i++) {
-            hashT.remove(i)
-          }
-          expect(hashT.count).equals(0, 'hash not empty')
-          hashT.load('UTHash', storage).then(() => {
-            expect(hashT.count).equals(5, 'number of items in hash not as expected')
-            for (var i = 0; i < 5; i++) {
-              expect(hashT.get(i)).equals('item number ' + i, 'hash item not as expected')
-            }
-            done()
-          }).catch(err => { console.log(err) })
-        }).catch(err => { console.log(err) })
-      }).catch(err => { console.log(err) })
-    }).catch(err => { console.log(err) })
-  })
+  //       hashT.persist('UTHash', storage).then(() => {
+  //       // clear the hash
+  //         for (var i = 0; i < 5; i++) {
+  //           hashT.remove(i)
+  //         }
+  //         expect(hashT.count).equals(0, 'hash not empty')
+  //         hashT.load('UTHash', storage).then(() => {
+  //           expect(hashT.count).equals(5, 'number of items in hash not as expected')
+  //           for (var i = 0; i < 5; i++) {
+  //             expect(hashT.get(i)).equals('item number ' + i, 'hash item not as expected')
+  //           }
+  //           done()
+  //         }).catch(err => { console.log(err) })
+  //       }).catch(err => { console.log(err) })
+  //     }).catch(err => { console.log(err) })
+  //   }).catch(err => { console.log(err) })
+  // })
 
   mocha.it('HashTable test 1', function () {
     var hashT = new HashTable()
