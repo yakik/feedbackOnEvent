@@ -8,38 +8,8 @@ class HashTable {
     return this._count
   }
 
+ 
   clearPersistence (key, storage) {
-    return new Promise(function (resolve, reject) {
-      storage.removeItem(key,function() {
-        resolve()
-      }).catch(err => { reject(err) })
-    })
-  }
-
-  persist (key, storage) {
-    var me = this
-    return new Promise(function (resolve, reject) {
-      storage.setItem(key, {storage: me._storage, count: me._count, limit: me._limit},function() {
-        resolve()
-      }).catch(err => { reject(err) })
-    })
-  }
-
-  load (key, storage) {
-    var me = this
-    return new Promise(function (resolve, reject) {
-      storage.getItem(key,function(persistedItems,err) {
-    //    if (err) return;
-        me._storage = persistedItems.storage
-        me._count = persistedItems.count
-        me._limit = persistedItems.limit
-        resolve()
-      })
-    //  }).catch(err => { reject(err) })
-    })
-  }
-
-  clearPersistenceMONGO (key, storage) {
     return new Promise(function (resolve, reject) {
       storage.remove( { key: { $eq: key } } ,function(err,obj){//.then(() => {
         if (err) throw err
@@ -49,7 +19,7 @@ class HashTable {
   })
 }
 
-  persistMONGO (key, storage) {
+  persist (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
       storage.updateOne(
@@ -62,7 +32,7 @@ class HashTable {
     })
   }
 
-  loadMONGO (key, storage) {
+  load (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
       storage.findOne({ key : { $eq: key } }, function(err, persistedItems) {

@@ -9,7 +9,7 @@ var HashTable = require('./HashTable.js')
 
 mocha.describe('Hash Table Tests', function () {
 
-  mocha.it('test hash table persistence MONGO', (done) => {
+  mocha.it('test hash table persistence', (done) => {
     const mongodb = require('mongodb');
     let uri = 'mongodb://yaki:3zqUCWAJG1K0@ds159845.mlab.com:59845/feedbackagilesparks';
     mongodb.MongoClient.connect(uri, function(err, client) {
@@ -18,18 +18,18 @@ mocha.describe('Hash Table Tests', function () {
         let storage = db.collection('feedback');
          var hashT = new HashTable()
       // clear previous tests
-      hashT.clearPersistenceMONGO('UTHash', storage).then(() => {
+      hashT.clearPersistence('UTHash', storage).then(() => {
         for (var i = 0; i < 5; i++) {
           hashT.put(i, 'item number ' + i)
         }
 
-        hashT.persistMONGO('UTHash', storage).then(() => {
+        hashT.persist('UTHash', storage).then(() => {
         // clear the hash
           for (var i = 0; i < 5; i++) {
             hashT.remove(i)
           }
           expect(hashT.count).equals(0, 'hash not empty')
-          hashT.loadMONGO('UTHash', storage).then(() => {
+          hashT.load('UTHash', storage).then(() => {
             expect(hashT.count).equals(5, 'number of items in hash not as expected')
             for (var i = 0; i < 5; i++) {
               expect(hashT.get(i)).equals('item number ' + i, 'hash item not as expected')
@@ -41,33 +41,7 @@ mocha.describe('Hash Table Tests', function () {
     })//.catch(err => { console.log(err) })
   })
 
-  // mocha.it('test hash table persistence', function() {
-  //   var storage = require('node-persist')
-  //   storage.init().then(() => {
-  //     var hashT = new HashTable()
-  //     // clear previous tests
-  //     hashT.clearPersistence('UTHash', storage).then(() => {
-  //       for (var i = 0; i < 5; i++) {
-  //         hashT.put(i, 'item number ' + i)
-  //       }
-
-  //       hashT.persist('UTHash', storage).then(() => {
-  //       // clear the hash
-  //         for (var i = 0; i < 5; i++) {
-  //           hashT.remove(i)
-  //         }
-  //         expect(hashT.count).equals(0, 'hash not empty')
-  //         hashT.load('UTHash', storage).then(() => {
-  //           expect(hashT.count).equals(5, 'number of items in hash not as expected')
-  //           for (var i = 0; i < 5; i++) {
-  //             expect(hashT.get(i)).equals('item number ' + i, 'hash item not as expected')
-  //           }
-  //           done()
-  //         }).catch(err => { console.log(err) })
-  //       }).catch(err => { console.log(err) })
-  //     }).catch(err => { console.log(err) })
-  //   }).catch(err => { console.log(err) })
-  // })
+ 
 
   mocha.it('HashTable test 1', function () {
     var hashT = new HashTable()
