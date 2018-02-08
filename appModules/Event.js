@@ -1,3 +1,5 @@
+console.log('Hi, I\'m EvenT!')
+
 class Event {
   constructor (ID, Name, numberOfSmileys, smileysFeedbackCountArray) {
     this._ID = ID

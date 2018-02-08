@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var myApp=require('../app.js')
 
 var referenceSetup = new (require('../referenceSetup'))()
 var numberOfSmileyTypes = referenceSetup.numberOfSmileyTypes
@@ -33,6 +34,7 @@ storage.init().then(() => {
     router.post('/feedbackGiven/', function (req, res, next) {
       // res.redirect('/thankYou/' + req.body.eventID)
       console.log('before')
+      console.log(myApp.yaki)
       res.redirect('/')
       eventManager.addSmileyFeedback(req.body.eventID, req.body.smileyID)
       console.log('after')

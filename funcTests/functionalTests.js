@@ -33,17 +33,16 @@ test.describe('Functional Test 1', function () {
     var testedEvent = 'ScrumMasters1234'
     var testEventDriver = new EventDriver(testReference, appReference)
     this.timeout(100000)
-    testEventDriver
-      .addEvent(testedEvent).then(() => {
-        testEventDriver.openFeedbackPage(testedEvent).then(() => {
-          testEventDriver.clickSmiley(3).then(() => {
-            testEventDriver.getStatForEvent(testedEvent, 3).then((text) => {
-              var stat = text.split(' ', 1)
-              expect(parseInt(stat[0])).equals(1, 'counter not 1')
-              testEventDriver.quit()
-            }).catch(err => { console.log(err) })
-          }).catch(err => { console.log(err) })
-        }).catch(err => { console.log(err) })
-      }).catch(err => { console.log(err) })
+    testEventDriver.addEvent(testedEvent).then(() => {
+    	testEventDriver.openFeedbackPage(testedEvent).then(() => {
+    		testEventDriver.clickSmiley(3).then(() => {
+    			testEventDriver.getStatForEvent(testedEvent, 3).then((text) => {
+    				var stat = text.split(' ', 1)
+    				expect(parseInt(stat[0])).equals(1, 'counter not 1')
+    				testEventDriver.quit()
+    			}).catch(err => { console.log(err) })
+    		}).catch(err => { console.log(err) })
+    	}).catch(err => { console.log(err) })
+    }).catch(err => { console.log(err) })
   })
 })
