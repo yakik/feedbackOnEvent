@@ -37,6 +37,39 @@ class HashTable {
     })
   }
 
+  clearPersistenceMONGO (key, storage) {
+    return new Promise(function (resolve, reject) {
+      storage.remove( { key : key } ).then(() => {
+        resolve()
+      }).catch(err => { reject(err) })
+    })
+  }
+
+  persistMONGO (key, storage) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      storage.update(
+        { key: key },
+        {storage: me._storage, count: me._count, limit: me._limit},
+        { upsert: true }
+      ).then(() => {
+        resolve()
+      }).catch(err => { reject(err) })
+    })
+  }
+
+  loadMONGO (key, storage) {
+    var me = this
+    return new Promise(function (resolve, reject) {
+      storage.find({ key : key }).then((persistedItems) => {
+        me._storage = persistedItems.storage
+        me._count = persistedItems.count
+        me._limit = persistedItems.limit
+        resolve()
+      }).catch(err => { reject(err) })
+    })
+  }
+
   put (key, value) {
     // create an index for our storage location by passing it through our hashing function
     var index = this.hashFunc(key, this._limit)

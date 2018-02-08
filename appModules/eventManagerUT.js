@@ -79,25 +79,31 @@ mocha.describe('event Manager Tests', function () {
 
 
   mocha.it('test event manager persistence MONGO', (done) => {
-    var storage = require('node-persist')
-    storage.init().then(() => {
+  //Mongo Initialized
+    const mongodb = require('mongodb');
+    let uri = 'mongodb://yaki:3zqUCWAJG1K0@ds159845.mlab.com:59845/feedbackagilesparks';
+    mongodb.MongoClient.connect(uri, function(err, client) {
+      if(err) throw err;
+      let db = client.db('feedbackagilesparks')
+        let storage = db.collection('feedback');
+        
       var testEventManager = new EventManager()
       var testEventManager2 = new EventManager()
       // clear previous tests
-      testEventManager.clearPersistence('UTEventManager', storage).then(() => {
+      testEventManager.clearPersistenceMONGO('UTEventManager', storage).then(() => {
         for (var i = 0; i < 5; i++) {
           testEventManager.createEvent('Event' + i, 5, [i, i + 1, i + 2, i + 3, i + 4])
           testEventManager2.createEvent('Event' + i, 5, [i, i + 1, i + 2, i + 3, i + 4])
         }
 
-        testEventManager.persist('UTEventManager', storage).then(() => {
+        testEventManager.persistMONGO('UTEventManager', storage).then(() => {
           // clear the hash
           var allEventsForRemoval = testEventManager.getAllEvents()
           for (var i = 0; i < allEventsForRemoval.length; i++) {
             testEventManager.removeEvent(allEventsForRemoval[i].ID)
           }
           expect(testEventManager.count).equals(0, 'event Manager not empty')
-          testEventManager.load('UTEventManager', storage).then(() => {
+          testEventManager.loadMONGO('UTEventManager', storage).then(() => {
             expect(testEventManager.count).equals(5, 'number of events not as expected')
             var allEvents = testEventManager.getAllEvents()
             var allEvents2 = testEventManager2.getAllEvents()
