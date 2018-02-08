@@ -9,9 +9,14 @@ var buttonElementIDPrefix = referenceSetup.buttonElementIDPrefix
 
 var EventManager = require('../appModules/EventManager.js')
 var eventManager = new EventManager()
+const mongodb = require('mongodb');
+let uri = 'mongodb://yaki:3zqUCWAJG1K0@ds159845.mlab.com:59845/feedbackagilesparks';
+mongodb.MongoClient.connect(uri, function(err, client) {
+  if(err) throw err;
+    let db = client.db('feedbackagilesparks')
+    let storage = db.collection('feedback');
 
-var storage = require('node-persist')
-storage.init().then(() => {
+
   eventManager.load('ProdEventManager', storage).then(() => {
     console.log('load success')
 

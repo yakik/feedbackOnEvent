@@ -49,6 +49,10 @@ class EventManager {
     return new Promise(function (resolve, reject) {
       storage.findOne({ key : { $eq: key } }, function(err, persistedItems) {
         if (err) throw err;
+        if (persistedItems==null){
+          constructor()
+          resolve()
+        } else {
         if ((persistedItems !== undefined)
           &&(persistedItems.eventSequence === parseInt(persistedItems.eventSequence, 10))) {
           me._ID = persistedItems.ID
@@ -58,7 +62,7 @@ class EventManager {
           }).catch(err => { reject(err) })
         } else {
           resolve()
-        }
+        }}
       })//.catch(err => { reject(err) })
     })
   }
