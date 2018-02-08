@@ -6,13 +6,15 @@ var sinon = require('sinon')
 
 var HashTable = require('./HashTable.js')
 
-mocha.describe('Hash Table Tests MONGO', function () {
-  mocha.it('test hash table persistence', (done) => {
+
+mocha.describe('Hash Table Tests', function () {
+
+  mocha.it('test hash table persistence MONGO', (done) => {
     const mongodb = require('mongodb');
     let uri = 'mongodb://yaki:3zqUCWAJG1K0@ds159845.mlab.com:59845/feedbackagilesparks';
     mongodb.MongoClient.connect(uri, function(err, client) {
       if(err) throw err;
-      let db = client.db('feedbackagilesparks')
+        let db = client.db('feedbackagilesparks')
         let storage = db.collection('feedback');
          var hashT = new HashTable()
       // clear previous tests
@@ -27,7 +29,7 @@ mocha.describe('Hash Table Tests MONGO', function () {
             hashT.remove(i)
           }
           expect(hashT.count).equals(0, 'hash not empty')
-          hashT.loadmONGO('UTHash', storage).then(() => {
+          hashT.loadMONGO('UTHash', storage).then(() => {
             expect(hashT.count).equals(5, 'number of items in hash not as expected')
             for (var i = 0; i < 5; i++) {
               expect(hashT.get(i)).equals('item number ' + i, 'hash item not as expected')
@@ -36,13 +38,10 @@ mocha.describe('Hash Table Tests MONGO', function () {
           }).catch(err => { console.log(err) })
         }).catch(err => { console.log(err) })
       }).catch(err => { console.log(err) })
-    }).catch(err => { console.log(err) })
+    })//.catch(err => { console.log(err) })
   })
 
-
-
-mocha.describe('Hash Table Tests', function () {
-  mocha.it('test hash table persistence', (done) => {
+  mocha.it('test hash table persistence', function() {
     var storage = require('node-persist')
     storage.init().then(() => {
       var hashT = new HashTable()

@@ -10,7 +10,7 @@ class HashTable {
 
   clearPersistence (key, storage) {
     return new Promise(function (resolve, reject) {
-      storage.removeItem(key).then(() => {
+      storage.removeItem(key,function() {
         resolve()
       }).catch(err => { reject(err) })
     })
@@ -19,7 +19,7 @@ class HashTable {
   persist (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.setItem(key, {storage: me._storage, count: me._count, limit: me._limit}).then(() => {
+      storage.setItem(key, {storage: me._storage, count: me._count, limit: me._limit},function() {
         resolve()
       }).catch(err => { reject(err) })
     })
@@ -28,45 +28,50 @@ class HashTable {
   load (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.getItem(key).then((persistedItems) => {
+      storage.getItem(key,function(persistedItems,err) {
+    //    if (err) return;
         me._storage = persistedItems.storage
         me._count = persistedItems.count
         me._limit = persistedItems.limit
         resolve()
-      }).catch(err => { reject(err) })
+      })
+    //  }).catch(err => { reject(err) })
     })
   }
 
   clearPersistenceMONGO (key, storage) {
     return new Promise(function (resolve, reject) {
-      storage.remove( { key : key } ).then(() => {
+      storage.remove( { key: { $eq: key } } ,function(err,obj){//.then(() => {
+        if (err) throw err
         resolve()
-      }).catch(err => { reject(err) })
+    //  }).catch(err => { reject(err) })
     })
-  }
+  })
+}
 
   persistMONGO (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.update(
-        { key: key },
-        {storage: me._storage, count: me._count, limit: me._limit},
-        { upsert: true }
-      ).then(() => {
-        resolve()
-      }).catch(err => { reject(err) })
+      storage.updateOne(
+        { key: { $eq: key } },
+        {key: key, storage: me._storage, count: me._count, limit: me._limit},
+        { upsert: true },function(err,res){
+          if (err) throw err;
+          resolve()
+      })//.catch(err => { reject(err) })
     })
   }
 
   loadMONGO (key, storage) {
     var me = this
     return new Promise(function (resolve, reject) {
-      storage.find({ key : key }).then((persistedItems) => {
+      storage.findOne({ key : { $eq: key } }, function(err, persistedItems) {
+        if (err) throw err;
         me._storage = persistedItems.storage
         me._count = persistedItems.count
         me._limit = persistedItems.limit
         resolve()
-      }).catch(err => { reject(err) })
+      })//.catch(err => { reject(err) })
     })
   }
 
